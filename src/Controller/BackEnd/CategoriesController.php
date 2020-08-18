@@ -12,6 +12,8 @@ use App\Controller\AppController;
  */
 class CategoriesController extends AppController
 {
+
+    var $helpers = array(custom);
     /**
      * Index method
      *
@@ -21,6 +23,7 @@ class CategoriesController extends AppController
     {
         $categories = $this->paginate($this->Categories);
         $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Danh mục');
         $this->set(compact('categories'));
         
         // return $this->render('index');
@@ -38,7 +41,8 @@ class CategoriesController extends AppController
         $category = $this->Categories->get($id, [
             'contain' => [],
         ]);
-
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Chi tiết danh mục');
         $this->set(compact('category'));
     }
 
@@ -59,7 +63,8 @@ class CategoriesController extends AppController
             }
             $this->Flash->error(__('The category could not be saved. Please, try again.'));
         }
-        $this->viewBuilder()->setLayout('backend/master');
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Thêm danh mục');
         $this->set(compact('category'));
     }
 
@@ -84,6 +89,8 @@ class CategoriesController extends AppController
             }
             $this->Flash->error(__('The category could not be saved. Please, try again.'));
         }
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Sửa danh mục');
         $this->set(compact('category'));
     }
 
@@ -103,7 +110,7 @@ class CategoriesController extends AppController
         } else {
             $this->Flash->error(__('The category could not be deleted. Please, try again.'));
         }
-
+        $this->viewBuilder()->setLayout('backend/master/master');
         return $this->redirect(['action' => 'index']);
     }
 }

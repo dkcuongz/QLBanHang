@@ -4,6 +4,7 @@
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $users
  */
 ?>
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 <div class="users index content">
     <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Users') ?></h3>
@@ -31,7 +32,7 @@
                     <td><?= h($user->email) ?></td>
                     <td><?= h($user->password) ?></td>
                     <td><?= h($user->role) ?></td>
-                    <td><?= $this->Number->format($user->phone) ?></td>
+                    <td><?= h($user->phone) ?></td>
                     <td><?= h($user->address) ?></td>
                     <td><?= h($user->created) ?></td>
                     <td><?= h($user->modified) ?></td>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Routes configuration.
  *
@@ -41,66 +42,23 @@ use Cake\Routing\RouteBuilder;
  * inconsistently cased URLs when used with `:plugin`, `:controller` and
  * `:action` markers.
  */
+
 /** @var \Cake\Routing\RouteBuilder $routes */
 $routes->setRouteClass(DashedRoute::class);
 
 $routes->scope('/', function (RouteBuilder $builder) {
-    /*
-     * Here, we are connecting '/' (base path) to a controller called 'Pages',
-     * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, templates/Pages/home.php)...
-     */
     $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-
-    /*
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
     $builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-    
-    /*
-     * Connect catchall routes for all controllers.
-     *
-     * The `fallbacks` method is a shortcut for
-     *
-     * ```
-     * $builder->connect('/:controller', ['action' => 'index']);
-     * $builder->connect('/:controller/:action/*', []);
-     * ```
-     *
-     * You can remove these routes once you've connected the
-     * routes you want in your application.
-     */
-    $builder->fallbacks();
-});
-$routes->scope('/admin',['prefix'=>'BackEnd'], function (RouteBuilder $builder) {
-    /*
-     * Here, we are connecting '/' (base path) to a controller called 'Pages',
-     * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, templates/Pages/home.php)...
-     */
-    $builder->connect('/', ['controller' => 'Home', 'action' => 'index','index']);
-
-    /*
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
-    $builder->connect('/user', ['controller' => 'Users', 'action' => 'index','index']);
-    $builder->connect('/category', ['controller' => 'Categories', 'action' => 'index','index']);
-    $builder->connect('/product', ['controller' => 'Products', 'action' => 'index','index']);
-    $builder->connect('/order', ['controller' => 'Orders', 'action' => 'index','index']);
-    
-    /*
-     * Connect catchall routes for all controllers.
-     *
-     * The `fallbacks` method is a shortcut for
-     *
-     * ```
-     * $builder->connect('/:controller', ['action' => 'index']);
-     * $builder->connect('/:controller/:action/*', []);
-     * ```
-     *
-     * You can remove these routes once you've connected the
-     * routes you want in your application.
-     */
     $builder->fallbacks();
 });
 
+$routes->scope('/admin', ['prefix' => 'BackEnd'], function (RouteBuilder $builder) {
+    $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
+    $builder->connect('/', ['controller' => 'Home', 'action' => 'index', 'index']);
+    $builder->connect('/user', ['controller' => 'Users', 'action' => 'index', 'index']);
+    $builder->connect('/category', ['controller' => 'Categories', 'action' => 'index', 'index']);
+    $builder->connect('/product', ['controller' => 'Products', 'action' => 'index', 'index']);
+    $builder->connect('/order', ['controller' => 'Orders', 'action' => 'index', 'index']);
+    $builder->connect('/user/login', ['controller' => 'Users', 'action' => 'login', 'login']);
+    $builder->fallbacks();
+});

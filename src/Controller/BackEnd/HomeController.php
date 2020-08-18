@@ -21,6 +21,7 @@ class HomeController extends AppController
     {
         // $home = $this->paginate($this->Home);
         // $this->set(compact('home'));
+        $this->set('title','Home');
         $this->viewBuilder()->setLayout('backend/master/master');
         return $this->render('index');
     }
@@ -37,7 +38,7 @@ class HomeController extends AppController
         // $home = $this->Home->get($id, [
         //     'contain' => [],
         // ]);
-
+        $this->set('title','Home');
         // $this->set(compact('home'));
         return "aaaaaaa";
     }

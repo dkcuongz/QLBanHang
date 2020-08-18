@@ -20,7 +20,8 @@ class OrdersController extends AppController
     public function index()
     {
         $orders = $this->paginate($this->Orders);
-
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Hóa đơn');
         $this->set(compact('orders'));
     }
 
@@ -36,7 +37,8 @@ class OrdersController extends AppController
         $order = $this->Orders->get($id, [
             'contain' => [],
         ]);
-
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Chi tiết hóa đơn');
         $this->set(compact('order'));
     }
 
@@ -57,6 +59,8 @@ class OrdersController extends AppController
             }
             $this->Flash->error(__('The order could not be saved. Please, try again.'));
         }
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Thêm hóa đơn');
         $this->set(compact('order'));
     }
 
@@ -81,6 +85,8 @@ class OrdersController extends AppController
             }
             $this->Flash->error(__('The order could not be saved. Please, try again.'));
         }
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Sửa hóa đơn');
         $this->set(compact('order'));
     }
 

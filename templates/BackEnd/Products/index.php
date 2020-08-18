@@ -4,6 +4,7 @@
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $products
  */
 ?>
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 <div class="products index content">
     <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Products') ?></h3>

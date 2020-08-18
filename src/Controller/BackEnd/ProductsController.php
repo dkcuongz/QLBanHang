@@ -20,7 +20,8 @@ class ProductsController extends AppController
     public function index()
     {
         $products = $this->paginate($this->Products);
-
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Sản phẩm');
         $this->set(compact('products'));
     }
 
@@ -36,7 +37,8 @@ class ProductsController extends AppController
         $product = $this->Products->get($id, [
             'contain' => [],
         ]);
-
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Chi tiết sản phẩm');
         $this->set(compact('product'));
     }
 
@@ -57,6 +59,8 @@ class ProductsController extends AppController
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Thêm sản phẩm');
         $this->set(compact('product'));
     }
 
@@ -81,6 +85,8 @@ class ProductsController extends AppController
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Sửa sản phẩm');
         $this->set(compact('product'));
     }
 
@@ -100,7 +106,7 @@ class ProductsController extends AppController
         } else {
             $this->Flash->error(__('The product could not be deleted. Please, try again.'));
         }
-
+        $this->viewBuilder()->setLayout('backend/master/master');
         return $this->redirect(['action' => 'index']);
     }
 }

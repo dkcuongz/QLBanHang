@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\BackEnd;
@@ -12,6 +13,25 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
+    public function login()
+    {
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            //set session
+            $this->set('title','Đăng nhập');
+            $this->Flash->error('Your username or password is incorrect.');
+        }
+    }
+    public function logout()
+    {
+        $this->Flash->success('You are now logged out.');
+        return $this->redirect($this->Auth->logout());
+    }
+
     /**
      * Index method
      *
@@ -20,7 +40,8 @@ class UsersController extends AppController
     public function index()
     {
         $users = $this->paginate($this->Users);
-
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Thành viên');
         $this->set(compact('users'));
     }
 
@@ -36,7 +57,8 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => [],
         ]);
-
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Chi tiết thành viên');
         $this->set(compact('user'));
     }
 
@@ -57,6 +79,8 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Thêm thành viên');
         $this->set(compact('user'));
     }
 
@@ -81,6 +105,8 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
+        $this->viewBuilder()->setLayout('backend/master/master');
+        $this->set('title','Sửa thành viên');
         $this->set(compact('user'));
     }
 

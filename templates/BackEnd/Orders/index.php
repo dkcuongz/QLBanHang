@@ -4,7 +4,7 @@
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $orders
  */
 ?>
-<div class="orders index content">
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <?= $this->Html->link(__('New Order'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Orders') ?></h3>
     <div class="table-responsive">

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,9 +15,11 @@ declare(strict_types=1);
  * @since     0.2.9
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 
 /**
  * Application Controller
@@ -49,10 +52,44 @@ class AppController extends Controller
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
         //$this->loadComponent('FormProtection');
+        $this->loadComponent('Auth', [
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password'
+                    ]
+                ]
+            ],
+            'loginAction' => [
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'loginRedirect' => [
+                'controller' => 'Home',
+                'action' => 'index'
+              ],
+            //use isAuthorized in Controllers
+            'authorize' => ['Controller'],
+            // If unauthorized, return them to page they were just on
+            'unauthorizedRedirect' => $this->referer()
+        ]);
+
+        // Allow the display action so our PagesController
+        // continues to work. Also enable the read only actions.
+        $this->Auth->allow(['display', 'view', 'index','add',]);
+        $this->Auth->logoutRedirect = array( 'controller' => 'users', 'action' => 'login','login' );
+        $this->Auth->allow(['logout']);
+        $this->set('Auth', $this->Auth);
     }
-    // public function beforeRender() {
-    //     parent::beforeRender();
-    
-    //     $this->layout = 'master';
-    // }
+
+    public function isAuthorized($user)
+    {
+        // Any registered user can access public functions
+        if (!$this->request->getParam('prefix')) {
+            return true;
+        }
+        // Default deny
+        return false;
+    }
 }

@@ -4,9 +4,18 @@
             <a class="navbar-brand" href="#"><span>Admin</span></a>
             <ul class="user-menu">
                 <li class="dropdown pull-right">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>  <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu"><li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>Thông tin</a></li>
-                    <li><a href="/logout"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user">
+                            <use xlink:href="#stroked-male-user"></use>
+                        </svg>                   
+                       <?php if ($Auth->user()) { echo h($Auth->user('username'));} ?>
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="admin/user/profile"><svg class="glyph stroked male-user">
+                                    <use xlink:href="#stroked-male-user"></use>
+                                </svg>Thông tin</a></li>
+                        <li><a href="/admin/logout"><svg class="glyph stroked cancel">
+                                    <use xlink:href="#stroked-cancel"></use>
+                                </svg> Logout</a></li>
                     </ul>
                 </li>
             </ul>

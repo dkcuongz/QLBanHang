@@ -1,7 +1,4 @@
-@extends('backend.master.master')
-@section('title','Category')
 
-@section('content')
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 	<div class="row">
 		<ol class="breadcrumb">
@@ -67,13 +64,8 @@
 	</div>
 	<!--/.row-->
 </div>
-@section('script')
-	@parent
 	<script>
 		function DelCate(name) {
 			return confirm('Bạn có chắc muốn xóa danh mục '+name+' không ?');
 		}
 	</script>
-
-@endsection
-@endsection
