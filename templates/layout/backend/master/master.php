@@ -11,7 +11,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake','../backend/css/bootstrap.min','../backend/css/styles','../backend/Awesome/css/all']) ?>
+    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake', '../backend/css/bootstrap.min', '../backend/css/styles', '../backend/Awesome/css/all']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -28,7 +28,6 @@
     <?= $this->fetch('content') ?>
 	<!-- javascript -->
 	<?= $this->Html->script(['../backend/js/jquery-1.11.1.min', '../backend/js/bootstrap.min', '../backend/js/chart.min','../backend/js/lumino.glyphs']) ?>
-	
 
 </body>
 

@@ -19,10 +19,13 @@ class OrdersController extends AppController
      */
     public function index()
     {
-        $orders = $this->paginate($this->Orders);
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Hóa đơn');
-        $this->set(compact('orders'));
+        if ($this->auth->role == 1 || $this->auth->role == 2) {
+            $orders = $this->paginate($this->Orders);
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Hóa đơn');
+            $this->set(compact('orders'));
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -34,12 +37,15 @@ class OrdersController extends AppController
      */
     public function view($id = null)
     {
-        $order = $this->Orders->get($id, [
-            'contain' => [],
-        ]);
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Chi tiết hóa đơn');
-        $this->set(compact('order'));
+        if ($this->auth->role == 1 || $this->auth->role == 2) {
+            $order = $this->Orders->get($id, [
+                'contain' => [],
+            ]);
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Chi tiết hóa đơn');
+            $this->set(compact('order'));
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -73,21 +79,24 @@ class OrdersController extends AppController
      */
     public function edit($id = null)
     {
-        $order = $this->Orders->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $order = $this->Orders->patchEntity($order, $this->request->getData());
-            if ($this->Orders->save($order)) {
-                $this->Flash->success(__('The order has been saved.'));
+        if ($this->auth->role == 1) {
+            $order = $this->Orders->get($id, [
+                'contain' => [],
+            ]);
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $order = $this->Orders->patchEntity($order, $this->request->getData());
+                if ($this->Orders->save($order)) {
+                    $this->Flash->success(__('The order has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The order could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The order could not be saved. Please, try again.'));
-        }
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Sửa hóa đơn');
-        $this->set(compact('order'));
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Sửa hóa đơn');
+            $this->set(compact('order'));
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -99,14 +108,16 @@ class OrdersController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $order = $this->Orders->get($id);
-        if ($this->Orders->delete($order)) {
-            $this->Flash->success(__('The order has been deleted.'));
-        } else {
-            $this->Flash->error(__('The order could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
+        if ($this->auth->role == 1) {
+            $this->request->allowMethod(['post', 'delete']);
+            $order = $this->Orders->get($id);
+            if ($this->Orders->delete($order)) {
+                $this->Flash->success(__('The order has been deleted.'));
+            } else {
+                $this->Flash->error(__('The order could not be deleted. Please, try again.'));
+            }
+            return $this->redirect(['action' => 'index']);
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 }

@@ -7,7 +7,6 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
 /**
  * Users Model
  *
@@ -89,8 +88,15 @@ class UsersTable extends Table
             ->maxLength('address', 255)
             ->requirePresence('address', 'create')
             ->notEmptyString('address');
-
-        return $validator;
+        return $validator
+            ->notBlank('email', 'An email is required')
+            ->email('email')
+            ->notBlank('password', 'A password is required')
+            ->notBlank('role', 'A role is required')
+            ->add('role', 'inList', [
+                'rule' => ['inList', ['admin', 'employee', 'customer']],
+                'message' => 'Please enter a valid role'
+            ]);
     }
 
     /**

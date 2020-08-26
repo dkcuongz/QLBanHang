@@ -40,56 +40,54 @@ class AppController extends Controller
      *
      * @return void
      */
+    protected $auth;
+
+
     public function initialize(): void
     {
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-
         /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
         //$this->loadComponent('FormProtection');
-        $this->loadComponent('Auth', [
-            'authenticate' => [
-                'Form' => [
-                    'fields' => [
-                        'username' => 'email',
-                        'password' => 'password'
-                    ]
-                ]
-            ],
-            'loginAction' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
-            'loginRedirect' => [
-                'controller' => 'Home',
-                'action' => 'index'
-              ],
-            //use isAuthorized in Controllers
-            'authorize' => ['Controller'],
-            // If unauthorized, return them to page they were just on
-            'unauthorizedRedirect' => $this->referer()
-        ]);
+        $this->loadComponent('Authentication.Authentication');
+        $this->loadComponent('Data');
 
         // Allow the display action so our PagesController
         // continues to work. Also enable the read only actions.
-        $this->Auth->allow(['display', 'view', 'index','add',]);
-        $this->Auth->logoutRedirect = array( 'controller' => 'users', 'action' => 'login','login' );
-        $this->Auth->allow(['logout']);
-        $this->set('Auth', $this->Auth);
     }
 
     public function isAuthorized($user)
     {
+        // if ((!isset($user['role'])) || ('' === $user['role'])) return false;
+
+        // // If we're trying to access the admin view, verify permission:
+        // if ('admin' === $this->action)
+        // {
+        //   if (1 == $user['role']) return true;  // User is admin, allow
+        //   return false;                                // User isn't admin, deny
+        // }
+
+        // return true;
         // Any registered user can access public functions
         if (!$this->request->getParam('prefix')) {
             return true;
         }
         // Default deny
         return false;
+    }
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        // for all controllers in our application, make index and view
+        // actions public, skipping the authentication check.
+        $this->Authentication->addUnauthenticatedActions(['index', 'view']);
+        $this->auth = $this->Authentication->getResult()->getData();
+        $this->set('auth', $this->auth);
     }
 }

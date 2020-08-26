@@ -7,16 +7,14 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 <div class="categories index content">
     <?= $this->Html->link(__('New Category'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Categories') ?></h3>
+    <h3><?= __('Danh mục') ?></h3>
     <div class="table-responsive">
-        <p><?php $getresponse = $this->Custom->yourhelperfunction();
-        echo $getresponse; ?></p>
         <table>
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th><?= $this->Paginator->sort('parent') ?></th>
+                    <th><?= $this->Paginator->sort('Mã danh mục') ?></th>
+                    <th><?= $this->Paginator->sort('Tên danh mục') ?></th>
+                    <th><?= $this->Paginator->sort('Danh mục cha') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -27,4 +28,22 @@ class Category extends Entity
         'name' => true,
         'parent' => true,
     ];
+    public $hasMany = array(
+        'Children' => array(
+            'className' => 'Category',
+            'foreignKey' => 'parent',
+            'dependent' => false
+        ),
+        'cate_Prd' => array(
+            'className' => 'Product',
+            'foreignKey' => 'id_cate',
+            'dependent' => false
+        ),
+    );
+    public $belongsTo = array(
+        'Parent' => array(
+            'className' => 'Category',
+            'foreignKey' => 'parent'
+        )
+    );
 }

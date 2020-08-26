@@ -13,7 +13,6 @@ use App\Controller\AppController;
 class CategoriesController extends AppController
 {
 
-    var $helpers = array(custom);
     /**
      * Index method
      *
@@ -21,12 +20,13 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->paginate($this->Categories);
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Danh mục');
-        $this->set(compact('categories'));
-        
-        // return $this->render('index');
+        if ($this->auth->role == 1) {
+            $categories = $this->paginate($this->Categories);
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Danh mục');
+            $this->set(compact('categories'));
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -38,12 +38,15 @@ class CategoriesController extends AppController
      */
     public function view($id = null)
     {
-        $category = $this->Categories->get($id, [
-            'contain' => [],
-        ]);
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Chi tiết danh mục');
-        $this->set(compact('category'));
+        if ($this->auth->role == 1) {
+            $category = $this->Categories->get($id, [
+                'contain' => [],
+            ]);
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Chi tiết danh mục');
+            $this->set(compact('category'));
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -53,19 +56,22 @@ class CategoriesController extends AppController
      */
     public function add()
     {
-        $category = $this->Categories->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $category = $this->Categories->patchEntity($category, $this->request->getData());
-            if ($this->Categories->save($category)) {
-                $this->Flash->success(__('The category has been saved.'));
+        if ($this->auth->role == 1) {
+            $category = $this->Categories->newEmptyEntity();
+            if ($this->request->is('post')) {
+                $category = $this->Categories->patchEntity($category, $this->request->getData());
+                if ($this->Categories->save($category)) {
+                    $this->Flash->success(__('The category has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The category could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The category could not be saved. Please, try again.'));
-        }
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Thêm danh mục');
-        $this->set(compact('category'));
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Thêm danh mục');
+            $this->set(compact('category'));
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -77,21 +83,24 @@ class CategoriesController extends AppController
      */
     public function edit($id = null)
     {
-        $category = $this->Categories->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $category = $this->Categories->patchEntity($category, $this->request->getData());
-            if ($this->Categories->save($category)) {
-                $this->Flash->success(__('The category has been saved.'));
+        if ($this->auth->role == 1) {
+            $category = $this->Categories->get($id, [
+                'contain' => [],
+            ]);
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $category = $this->Categories->patchEntity($category, $this->request->getData());
+                if ($this->Categories->save($category)) {
+                    $this->Flash->success(__('The category has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The category could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The category could not be saved. Please, try again.'));
-        }
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Sửa danh mục');
-        $this->set(compact('category'));
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Sửa danh mục');
+            $this->set(compact('category'));
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -103,14 +112,17 @@ class CategoriesController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $category = $this->Categories->get($id);
-        if ($this->Categories->delete($category)) {
-            $this->Flash->success(__('The category has been deleted.'));
-        } else {
-            $this->Flash->error(__('The category could not be deleted. Please, try again.'));
-        }
-        $this->viewBuilder()->setLayout('backend/master/master');
-        return $this->redirect(['action' => 'index']);
+        if ($this->auth->role == 1) {
+            $this->request->allowMethod(['post', 'delete']);
+            $category = $this->Categories->get($id);
+            if ($this->Categories->delete($category)) {
+                $this->Flash->success(__('The category has been deleted.'));
+            } else {
+                $this->Flash->error(__('The category could not be deleted. Please, try again.'));
+            }
+            $this->viewBuilder()->setLayout('backend/master/master');
+            return $this->redirect(['action' => 'index']);
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 }

@@ -6,8 +6,8 @@
                 <li class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user">
                             <use xlink:href="#stroked-male-user"></use>
-                        </svg>                   
-                       <?php if ($Auth->user()) { echo h($Auth->user('username'));} ?>
+                        </svg>
+                       <?php if ($auth) { echo h($auth->username);} ?>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="admin/user/profile"><svg class="glyph stroked male-user">

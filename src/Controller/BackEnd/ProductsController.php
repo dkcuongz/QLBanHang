@@ -19,10 +19,13 @@ class ProductsController extends AppController
      */
     public function index()
     {
-        $products = $this->paginate($this->Products);
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Sản phẩm');
-        $this->set(compact('products'));
+        if ($this->auth->role == 1 || $this->auth->role == 2) {
+            $products = $this->paginate($this->Products);
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Sản phẩm');
+            $this->set(compact('products'));
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -34,12 +37,15 @@ class ProductsController extends AppController
      */
     public function view($id = null)
     {
-        $product = $this->Products->get($id, [
-            'contain' => [],
-        ]);
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Chi tiết sản phẩm');
-        $this->set(compact('product'));
+        if ($this->auth->role == 1 || $this->auth->role == 2) {
+            $product = $this->Products->get($id, [
+                'contain' => [],
+            ]);
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Chi tiết sản phẩm');
+            $this->set(compact('product'));
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -49,19 +55,22 @@ class ProductsController extends AppController
      */
     public function add()
     {
-        $product = $this->Products->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $product = $this->Products->patchEntity($product, $this->request->getData());
-            if ($this->Products->save($product)) {
-                $this->Flash->success(__('The product has been saved.'));
+        if ($this->auth->role == 1) {
+            $product = $this->Products->newEmptyEntity();
+            if ($this->request->is('post')) {
+                $product = $this->Products->patchEntity($product, $this->request->getData());
+                if ($this->Products->save($product)) {
+                    $this->Flash->success(__('The product has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The product could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The product could not be saved. Please, try again.'));
-        }
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Thêm sản phẩm');
-        $this->set(compact('product'));
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Thêm sản phẩm');
+            $this->set(compact('product'));
+            } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -73,21 +82,24 @@ class ProductsController extends AppController
      */
     public function edit($id = null)
     {
-        $product = $this->Products->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $product = $this->Products->patchEntity($product, $this->request->getData());
-            if ($this->Products->save($product)) {
-                $this->Flash->success(__('The product has been saved.'));
+        if ($this->auth->role == 1) {
+            $product = $this->Products->get($id, [
+                'contain' => [],
+            ]);
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $product = $this->Products->patchEntity($product, $this->request->getData());
+                if ($this->Products->save($product)) {
+                    $this->Flash->success(__('The product has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The product could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The product could not be saved. Please, try again.'));
-        }
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Sửa sản phẩm');
-        $this->set(compact('product'));
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Sửa sản phẩm');
+            $this->set(compact('product'));
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -99,14 +111,17 @@ class ProductsController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $product = $this->Products->get($id);
-        if ($this->Products->delete($product)) {
-            $this->Flash->success(__('The product has been deleted.'));
-        } else {
-            $this->Flash->error(__('The product could not be deleted. Please, try again.'));
-        }
-        $this->viewBuilder()->setLayout('backend/master/master');
-        return $this->redirect(['action' => 'index']);
+        if ($this->auth->role == 1) {
+            $this->request->allowMethod(['post', 'delete']);
+            $product = $this->Products->get($id);
+            if ($this->Products->delete($product)) {
+                $this->Flash->success(__('The product has been deleted.'));
+            } else {
+                $this->Flash->error(__('The product could not be deleted. Please, try again.'));
+            }
+            $this->viewBuilder()->setLayout('backend/master/master');
+            return $this->redirect(['action' => 'index']);
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 }

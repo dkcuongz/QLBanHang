@@ -31,4 +31,17 @@ class OrderDetail extends Entity
         'price' => true,
         'quantity' => true,
     ];
+    public $hasOne = array(
+        'ordtail_Prd' => array(
+            'className' => 'Product',
+            'foreignKey' => 'id_product',
+            'dependent' => false
+        ),
+    );
+    public $belongsTo = array(
+        'user_Ord' => array(
+            'className' => 'User',
+            'foreignKey' => 'id_user'
+        )
+    );
 }

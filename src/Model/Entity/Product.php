@@ -29,6 +29,7 @@ class Product extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id_cate' => true,
         'name' => true,
         'price' => true,
         'description' => true,
@@ -37,4 +38,10 @@ class Product extends Entity
         'created' => true,
         'updated' => true,
     ];
+    public $belongsTo = array(
+        'Prd_cate' => array(
+            'className' => 'Category',
+            'foreignKey' => 'cate_id'
+        )
+    );
 }

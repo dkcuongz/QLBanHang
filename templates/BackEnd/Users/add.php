@@ -20,9 +20,12 @@
                     echo $this->Form->control('username');
                     echo $this->Form->control('email');
                     echo $this->Form->control('password');
-                    echo $this->Form->control('role');
+                    echo $this->Form->control('role', [
+                    'options' => ['1' => 'Admin', '2' => 'employee', '3' => 'customer']
+                    ]);
                     echo $this->Form->control('phone');
                     echo $this->Form->control('address');
+
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

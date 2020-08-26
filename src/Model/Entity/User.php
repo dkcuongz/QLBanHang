@@ -49,6 +49,7 @@ class User extends Entity
     protected $_hidden = [
         'password',
     ];
+
     protected function _setPassword($value)
     {
         if (strlen($value)) {

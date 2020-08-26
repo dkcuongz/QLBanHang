@@ -39,4 +39,17 @@ class Order extends Entity
         'created' => true,
         'updated' => true,
     ];
+    public $hasMany = array(
+        'ord_Ordertail' => array(
+            'className' => 'OrderDetail',
+            'foreignKey' => 'id_order',
+            'dependent' => false
+        ),
+    );
+    public $belongsTo = array(
+        'user_Ord' => array(
+            'className' => 'User',
+            'foreignKey' => 'id_user'
+        )
+    );
 }
