@@ -131,11 +131,11 @@ class Application extends BaseApplication
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
+
         $authenticationService = new AuthenticationService([
             'unauthenticatedRedirect' => '/admin/users/login',
             'queryParam' => 'redirect',
         ]);
-
         // Load identifiers, ensure we check email and password fields
         $authenticationService->loadIdentifier('Authentication.Password', [
             'fields' => [
@@ -152,7 +152,7 @@ class Application extends BaseApplication
                 'username' => 'email',
                 'password' => 'password',
             ],
-            'loginUrl' => '/admin/users/login',
+            'loginUrl' => '/admin/users/logins',
         ]);
         return $authenticationService;
     }

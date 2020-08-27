@@ -12,6 +12,13 @@ use App\Controller\AppController;
  */
 class ProductsController extends AppController
 {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        $this->Authentication->allowUnauthenticated(['login']);
+    }
+
     /**
      * Index method
      *
