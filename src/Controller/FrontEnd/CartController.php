@@ -5,17 +5,13 @@ namespace App\Controller\FrontEnd;
 
 use App\Controller\AppController;
 use Cake\Http\Session;
-/**
- * Products Controller
- *
- * @method \App\Model\Entity\Product[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
+
 class CartController extends AppController
 {
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Authentication->addUnauthenticatedActions(['addToCart']);
+        $this->Authentication->addUnauthenticatedActions(['addToCart', 'deleteCart', 'updateCart']);
     }
     /**
      * Index method
@@ -24,44 +20,54 @@ class CartController extends AppController
      */
     public function index()
     {
+        $session = $this->request->getSession();
+        $total = 0;
+        $count = count($session->read('cart'));
+        foreach ($session->read('cart') as $key => $value){
+            $total += $value['price'] * $value['quantity'];
+        }
         $this->set('title','Cart');
         $this->viewBuilder()->setLayout('frontend/master/master');
-        $this->set(compact('data'));
+        $this->set('Cart', $session->read('cart'));
+        $this->set('total', $total);
+        $this->set('count', $count);
         return $this->render('index');
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Product id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $product = $this->getTableLocator()->get('Products')->find()->where(['id'=> $id])->first();
-        $prd_relate = $this ->getTableLocator()->get('Products')->find()->where(['id_cate'=> $product->id])->limit(5);
-        $cate = $this ->getTableLocator()->get('Categories')->find()->where(['id'=> $product->id_cate])->limit(5);
-        $prd = $this->getTableLocator()->get('Products')->find()->limit(5);
-        $this->set(compact('product', 'prd_relate', 'prd', 'cate'));
-        $this->viewBuilder()->setLayout('frontend/master/master');
-        $this->set('title', 'Chi tiết sản phẩm');
+    public  function deleteCart($id = null){
+        $session = $this->request->getSession();
+        $session->delete("cart.$id");
+        $this->redirect(array("controller" => "Cart", "action" => "index"));
     }
+
     public function addToCart($id = null){
         $session = $this->request->getSession();
         $prd = $this->getTableLocator()->get('Products')->find()->where(['id'=> $id])->first();
         $session = $this->request->getSession();
         if($session->check("cart.$id")) {
+            $quantity = $session->read("cart.$id.quantity") + 1;
             $session->write([
-                "cart.$id.quantity"=> $session->read("cart.$id.quantity") + 1,
+                "cart.$id.quantity"=> $quantity,
+            ]);
+        } else {
+                $session->write([
+                    "cart.$id" => $id,
+                    "cart.$id.name" => $prd->name,
+                    "cart.$id.quantity" => "1",
+                    "cart.$id.price" => $prd->price,
+                    "cart.$id.img" =>$prd->img
+                ]);
+        }
+            $this->redirect(array("controller" => "Cart", "action" => "index"));
+    }
+    public function updateCart($id = null){
+        $session = $this->request->getSession();
+        $data = $this->request->getData();
+        foreach ($data['id_prd'] as $key => $value) {
+            $session->write([
+                "cart.$value.quantity"=> $data['quantity'][$key],
             ]);
         }
-        $session->write([
-            'cart' => $id,
-            "cart.$id.quantity"=> "1",
-            "cart.$id.price"=> $prd->price
-        ]);
-            $this->redirect(array("controller" => "Cart",
-            "action" => "index"));
+        $this->redirect(array("controller" => "Cart", "action" => "index"));
     }
 }

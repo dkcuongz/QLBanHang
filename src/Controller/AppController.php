@@ -41,7 +41,8 @@ class AppController extends Controller
      * @return void
      */
     protected $auth;
-
+    protected $total;
+    protected $count;
 
     public function initialize(): void
     {
@@ -88,6 +89,7 @@ class AppController extends Controller
         // actions public, skipping the authentication check.
         $this->Authentication->addUnauthenticatedActions(['index', 'view']);
         $this->auth = $this->Authentication->getResult()->getData();
-        $this->set('auth', $this->auth);
+        $this->set('count', count($this->request->getSession()->read('cart')));
+        $this->set('total', $this->Data->getTotal($this->request->getSession()));
     }
 }

@@ -135,9 +135,7 @@ use Cake\Routing\Router;
                                         <a href="<?php echo Router::url(['_name' => 'product_detail',h($prd->id)]); ?>" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>
                                 </div>
-
                                 <h2><a href=""><?php echo h($prd->name)?>
-
                                 <div class="product-carousel-price">
                                     <ins><?= $this->Number->format($product->price) ?> VNĐ</ins> <del>$100.00</del>
                                 </div>

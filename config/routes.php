@@ -51,7 +51,9 @@ $routes->scope('/', ['prefix' => 'FrontEnd'], function (RouteBuilder $builder) {
     $builder->connect('procduct/detail/*', ['controller' => 'Product', 'action' => 'view'], ['_name' => 'product_detail']);
     $builder->connect('procduct', ['controller' => 'Product', 'action' => 'index'], ['_name' => 'product']);
     $builder->connect('add_cart/*', ['controller' => 'Cart', 'action' => 'addToCart'], ['_name' => 'quick_add_cart']);
+    $builder->connect('del_cart/*', ['controller' => 'Cart', 'action' => 'deleteCart'], ['_name' => 'deleteCart']);
     $builder->connect('cart', ['controller' => 'Cart', 'action' => 'index'], ['_name' => 'cart']);
+    $builder->connect('checkout', ['controller' => 'Checkout', 'action' => 'index'], ['_name' => 'checkout']);
     $builder->fallbacks();
 });
 

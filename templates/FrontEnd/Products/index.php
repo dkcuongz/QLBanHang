@@ -31,7 +31,6 @@ use Cake\Routing\Router;
                         <div class="product-carousel-price">
                             <ins><?= $this->Number->format($prd->price) ?> VNĐ</ins> <del>$999.00</del>
                         </div>
-
                         <div class="product-option-shop">
                             <a class="add_to_cart_button" quantity="1" id="<?php echo h($prd->id) ?>" href="<?php echo Router::url(['_name' => 'quick_add_cart',h($prd->id)]); ?>">Add to cart</a>
                         </div>

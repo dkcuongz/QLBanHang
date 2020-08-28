@@ -17,7 +17,6 @@ use Cake\Routing\Router;
         </div>
     </div> <!-- End Page title area -->
 
-
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -78,7 +77,7 @@ use Cake\Routing\Router;
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form method="post" action="#">
+                            <?php echo $this->Form->create(null, ['url' => [ 'controller' => 'Cart', 'action' => 'updateCart']]); ?>
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
@@ -91,48 +90,66 @@ use Cake\Routing\Router;
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="cart_item">
-                                            <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="#">×</a>
-                                            </td>
+                                    <?php if (!empty($Cart)) {
+                                    foreach ($Cart as $key => $value): ?>
+                                    <tr class="cart_item">
+                                        <td class="product-remove">
+                                            <a title="Remove this item" class="remove"
+                                               href="<?php echo Router::url(['_name' => 'deleteCart', h($key)]); ?>">×</a>
+                                        </td>
+                                        <td class="product-thumbnail">
+                                            <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="<?php echo $this->Url->webroot; ?>/frontend/img/<?php echo h($value['img']); ?>"></a>
+                                        </td>
 
-                                            <td class="product-thumbnail">
-                                                <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="<?php echo $this->Url->webroot; ?>/frontend/img/product-thumb-2.jpg"></a>
-                                            </td>
+                                        <td class="product-name">
+                                            <a href="single-product.html"><?php echo h($value['name']); ?></a>
+                                        </td>
 
-                                            <td class="product-name">
-                                                <a href="single-product.html">Ship Your Idea</a>
-                                            </td>
+                                        <td class="product-price">
+                                            <span class="amount"><?= $this->Number->format($value['price']) ?> VNĐ</span>
+                                        </td>
 
-                                            <td class="product-price">
-                                                <span class="amount">£15.00</span>
-                                            </td>
-
-                                            <td class="product-quantity">
-                                                <div class="quantity buttons_added">
-                                                    <input type="button" class="minus" value="-">
-                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
-                                                    <input type="button" class="plus" value="+">
-                                                </div>
-                                            </td>
-
-                                            <td class="product-subtotal">
-                                                <span class="amount">£15.00</span>
-                                            </td>
-                                        </tr>
+                                        <td class="product-quantity">
+                                            <div class="quantity buttons_added">
+                                                <?php
+                                                echo $this->Form->control("",
+                                                    [   'value' => h($key),
+                                                        'type' => 'hidden',
+                                                        'name'   => 'id_prd[]'
+                                                    ]);
+                                                echo $this->Form->control("",
+                                                    [
+                                                        'value' => h($value['quantity']),
+                                                        'class' => 'input-text qty text',
+                                                        'type' => 'number',
+                                                        'min' => "1",
+                                                        'step' => 1,
+                                                        'name'   => 'quantity[]'
+                                                    ]);
+                                               ?>
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal">
+                                            <span class="amount"><?=  $this->Number->format($value['quantity'] * $value['price'])?>VNĐ</span>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach;
+                                    }
+                                    else {
+                                        echo  h("Giỏ hàng trống!");
+                                    }
+                                    ?>
                                         <tr>
                                             <td class="actions" colspan="6">
                                                 <div class="coupon">
-                                                    <input type="submit" value="Checkout" name="apply_coupon" class="button">
+                                                    <a class="btn btn-primary" href="<?php echo Router::url(['_name' => 'checkout']); ?>"> Checkout</a>
                                                 </div>
-                                                <input type="submit" value="Update Cart" name="update_cart" class="button">
-
+                                                <?= $this->Form->button(__('Update')) ?>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                            </form>
-
+                            <?= $this->Form->end() ?>
                             <div class="cart-collaterals">
 
 
@@ -167,11 +184,6 @@ use Cake\Routing\Router;
 
                                 <table cellspacing="0">
                                     <tbody>
-                                        <tr class="cart-subtotal">
-                                            <th>Cart Subtotal</th>
-                                            <td><span class="amount">£15.00</span></td>
-                                        </tr>
-
                                         <tr class="shipping">
                                             <th>Shipping and Handling</th>
                                             <td>Free Shipping</td>
@@ -179,13 +191,11 @@ use Cake\Routing\Router;
 
                                         <tr class="order-total">
                                             <th>Order Total</th>
-                                            <td><strong><span class="amount">£15.00</span></strong> </td>
+                                            <td><strong><span class="amount"><?= $this->Number->format($total) ;?> VNĐ</span></strong> </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-
-
                             <form method="post" action="#" class="shipping_calculator">
                                 <h2><a class="shipping-calculator-button" data-toggle="collapse" href="#calcalute-shipping-wrap" aria-expanded="false" aria-controls="calcalute-shipping-wrap">Calculate Shipping</a></h2>
 
