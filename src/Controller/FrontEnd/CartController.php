@@ -21,11 +21,13 @@ class CartController extends AppController
     public function index()
     {
         $session = $this->request->getSession();
-        $total = 0;
-        $count = count($session->read('cart'));
+        $total =  0;
+        $count = $this->request->getSession()->check('cart') ? count($session->read('cart')) : 0;
+        if($this->request->getSession()->check('cart')) {
         foreach ($session->read('cart') as $key => $value){
             $total += $value['price'] * $value['quantity'];
         }
+    }
         $this->set('title','Cart');
         $this->viewBuilder()->setLayout('frontend/master/master');
         $this->set('Cart', $session->read('cart'));
