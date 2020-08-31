@@ -4,7 +4,6 @@
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $categories
  */
 use Cake\Routing\Router;
-
 ?>
     <div class="product-big-title-area">
         <div class="container">

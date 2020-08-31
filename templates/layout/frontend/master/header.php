@@ -3,8 +3,6 @@
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $categories
  */
-use Cake\Routing\Router;
-
 ?>
 <div class="header-area">
     <div class="container">
@@ -54,10 +52,10 @@ use Cake\Routing\Router;
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="<?php echo Router::url(['_name' => 'home']); ?>">Home</a></li>
-                    <li><a href="<?php echo Router::url(['_name' => 'product']); ?>">Shop page</a></li>
-                    <li><a href="<?php echo Router::url(['_name' => 'cart']); ?>">Cart</a></li>
-                    <li><a href="<?php echo Router::url(['_name' => 'checkout']); ?>">Checkout</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop page</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="checkout.html">Checkout</a></li>
                     <li><a href="#">Category</a></li>
                 </ul>
             </div>
