@@ -152,7 +152,7 @@ class Application extends BaseApplication
                 'username' => 'email',
                 'password' => 'password',
             ],
-            'loginUrl' => '/admin/users/logins',
+            'loginUrl' => '/admin/users/login',
         ]);
         return $authenticationService;
     }

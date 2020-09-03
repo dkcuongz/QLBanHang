@@ -89,6 +89,7 @@ class AppController extends Controller
         // actions public, skipping the authentication check.
         $this->Authentication->addUnauthenticatedActions(['index', 'view']);
         $this->auth = $this->Authentication->getResult()->getData();
+        $this->set('auth', $this->auth);
         $this->set('count', $this->request->getSession()->check('cart') ? count($this->request->getSession()->read('cart')) : 0);
         $this->set('total', $this->request->getSession()->check('cart') ? $this->Data->getTotal($this->request->getSession()) : 0);
     }

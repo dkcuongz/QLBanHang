@@ -127,4 +127,16 @@ class OrdersController extends AppController
         } else
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
+
+    public function approvalOrder($id = null){
+        if ($this->auth->role == 1) {
+            $this->request->allowMethod(['post', 'get']);
+            $order = $this->Orders->get($id);
+            $order->state = 2 ;
+            $this->Orders->save($order);
+            $this->Flash->error(__('Successful !!'));
+        } else
+             $this->Flash->error(__('Something wrong. Please, try again.'));
+        return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+    }
 }

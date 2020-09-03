@@ -120,27 +120,27 @@ use Cake\Routing\Router;
                                             <p id="billing_first_name_field" class="form-row form-row-first validate-required">
                                                 <label class="" for="billing_first_name">Name <abbr title="required" class="required">*</abbr>
                                                 </label>
-                                                <?php echo $this->Form->input("name",['class' => 'input-text form-control', 'type' => 'text', 'placeholder' => 'Name']);?>
+                                                <?php echo $this->Form->input("name",['class' => 'input-text form-control', 'type' => 'text', 'placeholder' => 'Name', 'required']);?>
                                             </p>
                                             <div class="clear"></div>
 
                                             <p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
                                                 <label class="" for="billing_address_1">Address <abbr title="required" class="required">*</abbr>
                                                 </label>
-                                                <?php echo $this->Form->input("address",['class' => 'input-text form-control', 'type' => 'text', 'placeholder' => 'Address']);?>
+                                                <?php echo $this->Form->input("address",['class' => 'input-text form-control', 'type' => 'text', 'placeholder' => 'Address', 'required']);?>
                                             </p>
                                             <div class="clear"></div>
 
                                             <p id="billing_email_field" class="form-row form-row-first validate-required validate-email">
                                                 <label class="" for="billing_email">Email Address <abbr title="required" class="required">*</abbr>
                                                 </label>
-                                                <?php echo $this->Form->input("email",['class' => 'input-text form-control', 'type' => 'text', 'placeholder' => 'Email Address']);?>
+                                                <?php echo $this->Form->input("email",['class' => 'input-text form-control', 'type' => 'text', 'placeholder' => 'Email Address', 'required', 'email']);?>
                                             </p>
 
                                             <p id="billing_phone_field" class="form-row form-row-last validate-required validate-phone">
                                                 <label class="" for="billing_phone">Phone <abbr title="required" class="required">*</abbr>
                                                 </label>
-                                                <?php echo $this->Form->input("phone",['class' => 'input-text form-control', 'type' => 'text', 'placeholder' => 'Phone number']);?>
+                                                <?php echo $this->Form->input("phone",['class' => 'input-text form-control', 'type' => 'number', 'placeholder' => 'Phone number', 'required']);?>
                                             </p>
                                             <div class="clear"></div>
 

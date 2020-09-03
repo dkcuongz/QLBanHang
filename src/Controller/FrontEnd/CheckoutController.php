@@ -35,7 +35,7 @@ class CheckoutController extends AppController
             $ordersTable = $this->getTableLocator()->get('Orders');
             $order = $ordersTable->newEmptyEntity();
             if (!empty($this->auth)) {
-                $order->id_user = $this->auth->username;
+                $order->id_user = $this->auth->id;
             } else {
                 $order->id_user = 1;
             }
@@ -47,6 +47,16 @@ class CheckoutController extends AppController
             $order->total = $this->Data->getTotal($session);
             $order->created = Time::now();
             $ordersTable->save($order);
+            foreach((array) $session->read('cart') as $key => $value){
+                $orderdtailsTable = $this->getTableLocator()->get('OrderDetail');
+                $orderdtails = $orderdtailsTable->newEmptyEntity();
+                $orderdtails->id_order = $order->id;
+                $orderdtails->id_product = $key;
+                $orderdtails->quantity = $value['quantity'];
+                $orderdtails->price = $value['price'];
+                $orderdtailsTable->save($orderdtails);
+            }
+            $this->Flash->error(__('Checkout Successfull.'));
             $session->destroy();
             return  $this->redirect(array("controller" => "Checkout", "action" => "index"));
         }
