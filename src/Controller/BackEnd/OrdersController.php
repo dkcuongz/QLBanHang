@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\BackEnd;
 
 use App\Controller\AppController;
+use Cake\Mailer\Mailer;
 
 /**
  * Orders Controller
@@ -15,7 +16,6 @@ class OrdersController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-
         $this->Authentication->allowUnauthenticated(['login']);
     }
 
@@ -130,11 +130,21 @@ class OrdersController extends AppController
 
     public function approvalOrder($id = null){
         if ($this->auth->role == 1) {
+            $id = $this->request->getParam('id');
             $this->request->allowMethod(['post', 'get']);
             $order = $this->Orders->get($id);
             $order->state = 2 ;
-            $this->Orders->save($order);
-            $this->Flash->error(__('Successful !!'));
+            $order_detail = $this->getTableLocator()->get('OrderDetail')->find()->where(['id_order'=> $id])->all();
+            //$this->Orders->save($order);
+            $this->Flash->success(__('Successful !!'));
+            $mailer = new Mailer();
+            $mailer->setEmailFormat('html')
+                   ->setTo($this->auth->email)
+                   ->setFrom('dkboyWlove@gmail.com')
+                   ->viewBuilder()
+                   ->setTemplate('email');
+            $mailer->setViewVars(['order' => $order,'order_detail' => $order_detail]);
+            $mailer->deliver();
         } else
              $this->Flash->error(__('Something wrong. Please, try again.'));
         return $this->redirect(['controller' => 'Home', 'action' => 'index']);

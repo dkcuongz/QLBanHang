@@ -26,4 +26,7 @@ class HomeController extends AppController
         $this->set(compact('data'));
         return $this->render('index');
     }
+    public function getProfile($id = null){
+        return $this->render('profile');
+    }
 }

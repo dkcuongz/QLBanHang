@@ -12,11 +12,11 @@ use Cake\Routing\Router;
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
-                        <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
-                        <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
-                        <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
-                        <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
-                        <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                        <li><a href="<?php echo Router::url(['_name' => 'profile']); ?>"><i class="fa fa-user"></i> My Account</a></li>
+                        <li><a href="<?php echo Router::url(['_name' => 'cart']); ?>"><i class="fa fa-user"></i> My Cart</a></li>
+                        <li><a href="<?php echo Router::url(['_name' => 'checkout']); ?>"><i class="fa fa-user"></i> Checkout</a></li>
+                        <li><a href="<?php echo Router::url(['_name' => 'login']); ?>"><i class="fa fa-user"></i> Login</a></li>
+                        <li><a href="<?php echo Router::url(['_name' => 'logout']); ?>"><i class="fa fa-user"></i> Logout</a></li>
                     </ul>
                 </div>
             </div>

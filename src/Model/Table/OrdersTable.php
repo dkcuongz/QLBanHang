@@ -44,6 +44,7 @@ class OrdersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->hasMany('OrderDetail');
     }
 
     /**

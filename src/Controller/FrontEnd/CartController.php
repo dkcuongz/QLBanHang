@@ -36,7 +36,7 @@ class CartController extends AppController
         return $this->render('index');
     }
 
-    public  function deleteCart($id = null){
+    public function deleteCart($id = null){
         $session = $this->request->getSession();
         $session->delete("cart.$id");
         $this->redirect(array("controller" => "Cart", "action" => "index"));

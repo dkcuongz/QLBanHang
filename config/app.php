@@ -221,22 +221,22 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'className' => MailTransport::class,
+            'className' => 'Smtp',
             /*
              * The keys host, port, timeout, username, password, client and tls
              * are used in SMTP transports
              */
-            'host' => 'localhost',
+            'host' => 'smtp.gmail.com',
             'port' => 25,
             'timeout' => 30,
             /*
              * It is recommended to set these options through your environment or app_local.php
              */
-            //'username' => null,
-            //'password' => null,
-            'client' => null,
-            'tls' => false,
-            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+            'username' => 'dkboyWlove@gmail.com',
+            'password' => 'Anhcuong123',
+            'className' => 'Smtp',
+            'tls' => true,
+            // 'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
     ],
 

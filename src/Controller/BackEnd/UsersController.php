@@ -29,10 +29,19 @@ class UsersController extends AppController
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             // redirect to /articles after login success
-            $redirect = $this->request->getQuery('redirect', [
-                'controller' => 'Home',
-                'action' => 'index',
-            ]);
+            if ($result = $this->Authentication->getResult()->getData()->id == 1) {
+                $redirect = $this->request->getQuery('redirect', [
+                    'controller' => 'Home',
+                    'action' => 'index',
+                ]);
+            }
+            if ($result = $this->Authentication->getResult()->getData()->id != 1) {
+                $redirect = $this->request->getQuery('redirect', [
+                    'prefix' => 'FrontEnd',
+                    'controller' => 'Home',
+                    'action' => 'index',
+                ]);
+            } 
             return $this->redirect($redirect);
         }
         // display error if user submitted and authentication failed

@@ -53,19 +53,20 @@ $routes->scope('/', ['prefix' => 'FrontEnd'], function (RouteBuilder $builder) {
     $builder->connect('add_cart/*', ['controller' => 'Cart', 'action' => 'addToCart'], ['_name' => 'quick_add_cart']);
     $builder->connect('del_cart/*', ['controller' => 'Cart', 'action' => 'deleteCart'], ['_name' => 'deleteCart']);
     $builder->connect('cart', ['controller' => 'Cart', 'action' => 'index'], ['_name' => 'cart']);
+    $builder->connect('profile', ['controller' => 'Home', 'action' => 'getProfile'], ['_name' => 'profile']);
     $builder->connect('checkout', ['controller' => 'Checkout', 'action' => 'index'], ['_name' => 'checkout']);
     $builder->connect('postcheckout', ['controller' => 'Checkout', 'action' => 'postCheckout'], ['_name' => 'postCheckout']);
     $builder->fallbacks();
 });
 
 $routes->scope('/admin', ['prefix' => 'BackEnd'], function (RouteBuilder $builder) {
-    $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
+    $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
     $builder->connect('/', ['controller' => 'Home', 'action' => 'index', 'index']);
     $builder->connect('/user', ['controller' => 'Users', 'action' => 'index', 'index']);
     $builder->connect('/category', ['controller' => 'Categories', 'action' => 'index', 'index']);
     $builder->connect('/product', ['controller' => 'Products', 'action' => 'index', 'index']);
     $builder->connect('/order', ['controller' => 'Orders', 'action' => 'index', 'index']);
-    $builder->connect('/orders/approval-order/*', ['controller' => 'Orders', 'action' => 'approvalOrder', ['_name' => 'approvalOrder']]);
-    $builder->connect('/user/login', ['controller' => 'Users', 'action' => 'login', 'login']);
+    $builder->connect('/orders/approval-order/{id}', ['controller' => 'Orders', 'action' => 'approvalOrder', ['_name' => 'approvalOrder']]);
+    $builder->connect('/users/login', ['controller' => 'Users', 'action' => 'login', 'login'], ['_name' => 'login']);
     $builder->fallbacks();
 });
