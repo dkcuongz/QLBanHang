@@ -221,23 +221,38 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'className' => 'Smtp',
+            'className' => MailTransport::class,
             /*
              * The keys host, port, timeout, username, password, client and tls
              * are used in SMTP transports
              */
-            'host' => 'smtp.gmail.com',
+            'host' => 'localhost',
             'port' => 25,
             'timeout' => 30,
             /*
              * It is recommended to set these options through your environment or app_local.php
              */
-            'username' => 'dkboyWlove@gmail.com',
-            'password' => 'Anhcuong123',
-            'className' => 'Smtp',
-            'tls' => true,
-            // 'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+            //'username' => null,
+            //'password' => null,
+            'client' => null,
+            'tls' => false,
+            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
+         'gmail'=> [
+            'host' => 'ssl://smtp.gmail.com',
+            'port' => 465,
+            'username' => 'dkboyWlove@gmail.com',  //your gmail address
+            'password' => 'Anhcuong123',        //your gmail password
+            'className' => 'Smtp',
+            'log' => true,
+            'context' => [
+              'ssl' => [
+                  'verify_peer' => false,
+                  'verify_peer_name' => false,
+                  'allow_self_signed' => true
+              ]
+            ]
+          ],
     ],
 
     /*
@@ -259,6 +274,7 @@ return [
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],
+        
     ],
 
     /*

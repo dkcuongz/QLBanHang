@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\FrontEnd;
@@ -23,12 +24,12 @@ class CartController extends AppController
         $session = $this->request->getSession();
         $total =  0;
         $count = $this->request->getSession()->check('cart') ? count($session->read('cart')) : 0;
-        if($this->request->getSession()->check('cart')) {
-        foreach ($session->read('cart') as $key => $value){
-            $total += $value['price'] * $value['quantity'];
+        if ($this->request->getSession()->check('cart')) {
+            foreach ($session->read('cart') as $key => $value) {
+                $total += $value['price'] * $value['quantity'];
+            }
         }
-    }
-        $this->set('title','Cart');
+        $this->set('title', 'Cart');
         $this->viewBuilder()->setLayout('frontend/master/master');
         $this->set('Cart', $session->read('cart'));
         $this->set('total', $total);
@@ -36,38 +37,41 @@ class CartController extends AppController
         return $this->render('index');
     }
 
-    public function deleteCart($id = null){
+    public function deleteCart($id = null)
+    {
         $session = $this->request->getSession();
         $session->delete("cart.$id");
         $this->redirect(array("controller" => "Cart", "action" => "index"));
     }
 
-    public function addToCart($id = null){
+    public function addToCart($id = null)
+    {
         $session = $this->request->getSession();
-        $prd = $this->getTableLocator()->get('Products')->find()->where(['id'=> $id])->first();
+        $prd = $this->getTableLocator()->get('Products')->find()->where(['id' => $id])->first();
         $session = $this->request->getSession();
-        if($session->check("cart.$id")) {
+        if ($session->check("cart.$id")) {
             $quantity = $session->read("cart.$id.quantity") + 1;
             $session->write([
-                "cart.$id.quantity"=> $quantity,
+                "cart.$id.quantity" => $quantity,
             ]);
         } else {
-                $session->write([
-                    "cart.$id" => $id,
-                    "cart.$id.name" => $prd->name,
-                    "cart.$id.quantity" => "1",
-                    "cart.$id.price" => $prd->price,
-                    "cart.$id.img" =>$prd->img
-                ]);
+            $session->write([
+                "cart.$id" => $id,
+                "cart.$id.name" => $prd->name,
+                "cart.$id.quantity" => "1",
+                "cart.$id.price" => $prd->price,
+                "cart.$id.img" => $prd->img
+            ]);
         }
-            $this->redirect(array("controller" => "Cart", "action" => "index"));
+        $this->redirect(array("controller" => "Cart", "action" => "index"));
     }
-    public function updateCart($id = null){
+    public function updateCart($id = null)
+    {
         $session = $this->request->getSession();
         $data = $this->request->getData();
         foreach ($data['id_prd'] as $key => $value) {
             $session->write([
-                "cart.$value.quantity"=> $data['quantity'][$key],
+                "cart.$value.quantity" => $data['quantity'][$key],
             ]);
         }
         $this->redirect(array("controller" => "Cart", "action" => "index"));

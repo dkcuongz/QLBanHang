@@ -41,14 +41,14 @@ class UsersController extends AppController
                     'controller' => 'Home',
                     'action' => 'index',
                 ]);
-            } 
+            }
             return $this->redirect($redirect);
         }
         // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
             $this->Flash->error(__('Invalid email or password'));
         }
-            $this->set('title','Đăng nhập');
+        $this->set('title', 'Đăng nhập');
     }
 
     public function logout()
@@ -68,13 +68,14 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
-    {   if ($this->auth->role == 1) {
+    {
+        if ($this->auth->role == 1) {
             $users = $this->paginate($this->Users);
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Thành viên');
             $this->set(compact('users'));
-         } else
-             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        } else
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
     /**

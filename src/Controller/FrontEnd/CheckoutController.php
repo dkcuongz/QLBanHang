@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\FrontEnd;
@@ -23,14 +24,15 @@ class CheckoutController extends AppController
     {
         $session = $this->request->getSession();
         $this->set('Cart', $session->read('cart'));
-        $this->set('title','Checkout');
+        $this->set('title', 'Checkout');
         $this->viewBuilder()->setLayout('frontend/master/master');
         return $this->render('index');
     }
 
-    public function postCheckout() {
+    public function postCheckout()
+    {
         $data = $this->request->getData();
-        $session =$this->request->getSession();
+        $session = $this->request->getSession();
         if ($session->check('cart')) {
             $ordersTable = $this->getTableLocator()->get('Orders');
             $order = $ordersTable->newEmptyEntity();
@@ -47,7 +49,7 @@ class CheckoutController extends AppController
             $order->total = $this->Data->getTotal($session);
             $order->created = Time::now();
             $ordersTable->save($order);
-            foreach((array) $session->read('cart') as $key => $value){
+            foreach ((array) $session->read('cart') as $key => $value) {
                 $orderdtailsTable = $this->getTableLocator()->get('OrderDetail');
                 $orderdtails = $orderdtailsTable->newEmptyEntity();
                 $orderdtails->id_order = $order->id;

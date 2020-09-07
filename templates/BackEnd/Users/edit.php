@@ -1,10 +1,13 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface $user
  */
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <?= $this->Flash->render() ?>
+    <?= $this->fetch('content') ?>
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
@@ -22,12 +25,12 @@
             <fieldset>
                 <legend><?= __('Edit User') ?></legend>
                 <?php
-                    echo $this->Form->control('username');
-                    echo $this->Form->control('email');
-                    echo $this->Form->control('password');
-                    echo $this->Form->control('role');
-                    echo $this->Form->control('phone');
-                    echo $this->Form->control('address');
+                echo $this->Form->control('username');
+                echo $this->Form->control('email');
+                echo $this->Form->control('password');
+                echo $this->Form->control('role');
+                echo $this->Form->control('phone');
+                echo $this->Form->control('address');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

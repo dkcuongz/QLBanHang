@@ -1,10 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\BackEnd;
 
 use App\Controller\AppController;
+use Cake\Core\Configure;
 use Cake\Mailer\Mailer;
+use Cake\Mailer\TransportFactory;
 
 /**
  * Orders Controller
@@ -32,7 +35,7 @@ class OrdersController extends AppController
             $this->set('title', 'Hóa đơn');
             $this->set(compact('orders'));
         } else
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+            return $this->redirect(['prefix' => 'FrontEnd', 'controller' => 'Home', 'action' => 'index']);
     }
 
     /**
@@ -73,7 +76,7 @@ class OrdersController extends AppController
             $this->Flash->error(__('The order could not be saved. Please, try again.'));
         }
         $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title','Thêm hóa đơn');
+        $this->set('title', 'Thêm hóa đơn');
         $this->set(compact('order'));
     }
 
@@ -128,25 +131,39 @@ class OrdersController extends AppController
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 
-    public function approvalOrder($id = null){
+    public function approvalOrder($id = null)
+    {
         if ($this->auth->role == 1) {
             $id = $this->request->getParam('id');
             $this->request->allowMethod(['post', 'get']);
             $order = $this->Orders->get($id);
-            $order->state = 2 ;
-            $order_detail = $this->getTableLocator()->get('OrderDetail')->find()->where(['id_order'=> $id])->all();
+            $order->state = 2;
+            $order_detail = $this->getTableLocator()->get('OrderDetail')->find()->where(['id_order' => $id])->all();
             //$this->Orders->save($order);
+            foreach ($order_detail as $key => $value) {
+                $prd[$key] = $this->getTableLocator()->get('Products')->find()->where(['id' => $value['id_product']])->first();
+            }
             $this->Flash->success(__('Successful !!'));
             $mailer = new Mailer();
+            $mailer->setTransport('gmail');
             $mailer->setEmailFormat('html')
-                   ->setTo($this->auth->email)
-                   ->setFrom('dkboyWlove@gmail.com')
-                   ->viewBuilder()
-                   ->setTemplate('email');
-            $mailer->setViewVars(['order' => $order,'order_detail' => $order_detail]);
+                ->setSubject("Cảm ơn quý khách đã đặt đơn hàng")
+                ->setTo($this->auth->email)
+                ->setFrom('dkboyWlove@gmail.com')
+                ->viewBuilder()
+                ->setTemplate('email');
+            $mailer->setAttachments([
+                'logo.png' => [
+                    'file' => WWW_ROOT . '/email/logo.png',
+                    'mimetype' => 'image/png',
+                    'contentId' => 'logo12',
+                    'contentDisposition' => false
+                ]
+            ]);
+            $mailer->setViewVars(['order' => $order, 'order_detail' => $order_detail, 'prd' => $prd]);
             $mailer->deliver();
         } else
-             $this->Flash->error(__('Something wrong. Please, try again.'));
-        return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+            $this->Flash->error(__('Something wrong. Please, try again.'));
+        return $this->redirect(['controller' => 'Orders', 'action' => 'index']);
     }
 }

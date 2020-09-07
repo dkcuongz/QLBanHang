@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\FrontEnd;
@@ -25,10 +26,10 @@ class ProductController extends AppController
      */
     public function index()
     {
-            $products = $this->paginate($this->Products);
-            $this->viewBuilder()->setLayout('frontend/master/master');
-            $this->set('title', 'Sản phẩm');
-            $this->set(compact('products'));
+        $products = $this->paginate($this->Products);
+        $this->viewBuilder()->setLayout('frontend/master/master');
+        $this->set('title', 'Sản phẩm');
+        $this->set(compact('products'));
     }
 
     /**
@@ -40,11 +41,11 @@ class ProductController extends AppController
      */
     public function view($id = null)
     {
-//        $prd = $this->Data->getLst('Products');
-//        dd($prd);
-        $product = $this->getTableLocator()->get('Products')->find()->where(['id'=> $id])->first();
-        $prd_relate = $this ->getTableLocator()->get('Products')->find()->where(['id_cate'=> $product->id])->limit(5);
-        $cate = $this ->getTableLocator()->get('Categories')->find()->where(['id'=> $product->id_cate])->limit(5);
+        //        $prd = $this->Data->getLst('Products');
+        //        dd($prd);
+        $product = $this->getTableLocator()->get('Products')->find()->where(['id' => $id])->first();
+        $prd_relate = $this->getTableLocator()->get('Products')->find()->where(['id_cate' => $product->id])->limit(5);
+        $cate = $this->getTableLocator()->get('Categories')->find()->where(['id' => $product->id_cate])->limit(5);
         $prd = $this->getTableLocator()->get('Products')->find()->limit(5);
         $this->set(compact('product', 'prd_relate', 'prd', 'cate'));
         $this->viewBuilder()->setLayout('frontend/master/master');

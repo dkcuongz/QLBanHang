@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -40,8 +41,8 @@ class OrderDetailTable extends Table
         $this->setTable('order_detail');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
-        $this->belongsTo('Orders')->setForeignKey('id_order')
-                                  ->setJoinType('INNER');;
+        $this->belongsTo('Orders')->setForeignKey('id_order')->setJoinType('INNER');
+        $this->belongsTo('Products')->setForeignKey('id_product')->setJoinType('INNER');;
     }
 
     /**

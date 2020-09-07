@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\BackEnd;
@@ -25,8 +26,11 @@ class HomeController extends AppController
      */
     public function index()
     {
-        $this->set('title','Home');
-        $this->viewBuilder()->setLayout('backend/master/master');
-        return $this->render('index');
+        if ($this->auth->role == 1 || $this->auth->role == 2) {
+            $this->set('title', 'Home');
+            $this->viewBuilder()->setLayout('backend/master/master');
+            return $this->render('index');
+        } else
+            return $this->redirect('/');
     }
 }

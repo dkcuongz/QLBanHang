@@ -1,10 +1,14 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $categories
  */
+
 use Cake\Routing\Router;
 ?>
+<?= $this->Flash->render() ?>
+<?= $this->fetch('content') ?>
 <div class="product-big-title-area">
     <div class="container">
         <div class="row">
@@ -31,14 +35,14 @@ use Cake\Routing\Router;
                 </div>
                 <div class="single-sidebar">
                     <h2 class="sidebar-title">Products</h2>
-                    <?php foreach ($prd as $value): ?>
-                    <div class="thubmnail-recent">
-                        <img src="<?php echo $this->Url->webroot; ?>/frontend/img/<?php echo h($value->img) ?>" class="recent-thumb" alt="">
-                        <h2><a href="<?php echo Router::url(['_name' => 'product_detail',h($value->id)]); ?>"><?php echo h($value->name) ?></a></h2>
-                        <div class="product-sidebar-price">
-                            <ins><?= $this->Number->format($value->price) ?> VNĐ</ins> <del>$100.00</del>
+                    <?php foreach ($prd as $value) : ?>
+                        <div class="thubmnail-recent">
+                            <img src="<?php echo $this->Url->webroot; ?>/frontend/img/<?php echo h($value->img) ?>" class="recent-thumb" alt="">
+                            <h2><a href="<?php echo Router::url(['_name' => 'product_detail', h($value->id)]); ?>"><?php echo h($value->name) ?></a></h2>
+                            <div class="product-sidebar-price">
+                                <ins><?= $this->Number->format($value->price) ?> VNĐ</ins> <del>$100.00</del>
+                            </div>
                         </div>
-                    </div>
                     <?php endforeach; ?>
                 </div>
 
@@ -94,7 +98,7 @@ use Cake\Routing\Router;
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
                                             <h2>Product Description</h2>
                                             <p><?php echo h($product->description) ?></p>
-                                       </div>
+                                        </div>
                                         <div role="tabpanel" class="tab-pane fade" id="profile">
                                             <h2>Reviews</h2>
                                             <div class="submit-review">
@@ -126,20 +130,20 @@ use Cake\Routing\Router;
                     <div class="related-products-wrapper">
                         <h2 class="related-products-title">Related Products</h2>
                         <div class="related-products-carousel">
-                            <?php foreach ($prd_relate as $prd): ?>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-1.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                        <a href="<?php echo Router::url(['_name' => 'product_detail',h($prd->id)]); ?>" class="view-details-link"><i class="fa fa-link"></i> See details</a>
+                            <?php foreach ($prd_relate as $prd) : ?>
+                                <div class="single-product">
+                                    <div class="product-f-image">
+                                        <img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-1.jpg" alt="">
+                                        <div class="product-hover">
+                                            <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                            <a href="<?php echo Router::url(['_name' => 'product_detail', h($prd->id)]); ?>" class="view-details-link"><i class="fa fa-link"></i> See details</a>
+                                        </div>
                                     </div>
+                                    <h2><a href=""><?php echo h($prd->name) ?>
+                                            <div class="product-carousel-price">
+                                                <ins><?= $this->Number->format($product->price) ?> VNĐ</ins> <del>$100.00</del>
+                                            </div>
                                 </div>
-                                <h2><a href=""><?php echo h($prd->name)?>
-                                <div class="product-carousel-price">
-                                    <ins><?= $this->Number->format($product->price) ?> VNĐ</ins> <del>$100.00</del>
-                                </div>
-                            </div>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -148,4 +152,3 @@ use Cake\Routing\Router;
         </div>
     </div>
 </div>
-

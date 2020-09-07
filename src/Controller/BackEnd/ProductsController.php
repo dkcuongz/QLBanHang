@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\BackEnd;
@@ -76,7 +77,7 @@ class ProductsController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Thêm sản phẩm');
             $this->set(compact('product'));
-            } else
+        } else
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
     }
 

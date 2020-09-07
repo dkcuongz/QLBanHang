@@ -53,7 +53,7 @@ $routes->scope('/', ['prefix' => 'FrontEnd'], function (RouteBuilder $builder) {
     $builder->connect('add_cart/*', ['controller' => 'Cart', 'action' => 'addToCart'], ['_name' => 'quick_add_cart']);
     $builder->connect('del_cart/*', ['controller' => 'Cart', 'action' => 'deleteCart'], ['_name' => 'deleteCart']);
     $builder->connect('cart', ['controller' => 'Cart', 'action' => 'index'], ['_name' => 'cart']);
-    $builder->connect('profile', ['controller' => 'Home', 'action' => 'getProfile'], ['_name' => 'profile']);
+    $builder->connect('users/profile', ['controller' => 'Home', 'action' => 'getProfile'], ['_name' => 'profile']);
     $builder->connect('checkout', ['controller' => 'Checkout', 'action' => 'index'], ['_name' => 'checkout']);
     $builder->connect('postcheckout', ['controller' => 'Checkout', 'action' => 'postCheckout'], ['_name' => 'postCheckout']);
     $builder->fallbacks();
