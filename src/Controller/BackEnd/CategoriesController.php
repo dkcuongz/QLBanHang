@@ -32,8 +32,11 @@ class CategoriesController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Danh mục');
             $this->set(compact('categories'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -52,8 +55,11 @@ class CategoriesController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Chi tiết danh mục');
             $this->set(compact('category'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -77,8 +83,11 @@ class CategoriesController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Thêm danh mục');
             $this->set(compact('category'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -106,8 +115,11 @@ class CategoriesController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Sửa danh mục');
             $this->set(compact('category'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -129,7 +141,10 @@ class CategoriesController extends AppController
             }
             $this->viewBuilder()->setLayout('backend/master/master');
             return $this->redirect(['action' => 'index']);
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 }

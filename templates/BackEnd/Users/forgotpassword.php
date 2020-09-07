@@ -23,24 +23,17 @@
                 <?= $this->fetch('content') ?>
                 <div class="signup-content">
                     <div class="signup-form">
-                        <?= $this->Flash->render() ?>
-                        <h3 class="form-title">Login</h3>
-                        <?= $this->Form->create() ?>
-                        <div class="form-group">
-                            <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="email" name="email" id="name" placeholder="Your Email" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="password"><i class="zmdi zmdi-email"></i></label>
-                            <input type="password" name="password" id="email" placeholder="Your Password" required />
-                        </div>
-                        <?= $this->Form->submit(__('Login'), ['class' => 'form-submit']); ?>
-                        <?= $this->Form->end() ?>
+                        <h2 class="form-title">Email</h2>
+                        <form method="POST" class="register-form" id="register-form">
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="email" id="name" placeholder="Your Email" />
+                            </div>
+                        </form>
                     </div>
                     <div class="signup-image">
                         <figure><img src="<?php echo $this->Url->webroot; ?>/register_forgot/img/signup-image.jpg" alt="sing up image"></figure>
-                        <?= $this->Html->link("Register", ['action' => 'register', 'class' => 'signup-image-link']) ?>
-                        <?= $this->Html->link("Forgot Password", ['action' => 'forgotPassword', 'class' => 'signup-image-link']) ?>
+                        <?= $this->Html->link("I am already member", ['action' => 'login', 'class' => 'signup-image-link']) ?>
                     </div>
                 </div>
             </div>

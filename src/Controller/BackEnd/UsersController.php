@@ -19,7 +19,7 @@ class UsersController extends AppController
         parent::beforeFilter($event);
         // Configure the login action to not require authentication, preventing
         // the infinite redirect loop issue
-        $this->Authentication->addUnauthenticatedActions(['login']);
+        $this->Authentication->addUnauthenticatedActions(['login', 'register', 'forgotPassword']);
     }
 
     public function login()
@@ -48,7 +48,9 @@ class UsersController extends AppController
         if ($this->request->is('post') && !$result->isValid()) {
             $this->Flash->error(__('Invalid email or password'));
         }
+        $this->viewBuilder()->disableAutoLayout();
         $this->set('title', 'Đăng nhập');
+        return $this->render('login');
     }
 
     public function logout()
@@ -74,8 +76,11 @@ class UsersController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Thành viên');
             $this->set(compact('users'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -94,8 +99,11 @@ class UsersController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Chi tiết thành viên');
             $this->set(compact('user'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -119,8 +127,11 @@ class UsersController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Thêm thành viên');
             $this->set(compact('user'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -148,8 +159,11 @@ class UsersController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Sửa thành viên');
             $this->set(compact('user'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -171,7 +185,45 @@ class UsersController extends AppController
             }
 
             return $this->redirect(['action' => 'index']);
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
+    }
+    public function register()
+    {
+        $user = $this->Users->newEmptyEntity();
+        $data = $this->request->getData();
+        if ($this->request->is('post')) {
+            if($data['password'] == $data['re_pass']){
+                $user = $this->Users->patchEntity($user, $data, ['fieldList' => [ 'name', 'email', 'phone', 'address', 'password']]);
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('The user has been saved.'));
+    
+                    return $this->redirect(['action' => 'index']);
+                }
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $this->viewBuilder()->disableAutoLayout();
+        $this->set('title', 'Đăng kí thành viên');
+        return $this->render('register');
+    }
+    public function forgotPassword()
+    {
+        // $user = $this->Users->newEmptyEntity();
+        // if ($this->request->is('post')) {
+        //     $user = $this->Users->patchEntity($user, $this->request->getData());
+        //     if ($this->Users->save($user)) {
+        //         $this->Flash->success(__('The user has been saved.'));
+
+        //         return $this->redirect(['action' => 'index']);
+        //     }
+        //     $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        // }
+        $this->viewBuilder()->disableAutoLayout();
+        $this->set('title', 'Lấy lại mật khẩu');
+        return $this->render('forgotpassword');
     }
 }

@@ -32,8 +32,11 @@ class ProductsController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Sản phẩm');
             $this->set(compact('products'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -53,7 +56,7 @@ class ProductsController extends AppController
             $this->set('title', 'Chi tiết sản phẩm');
             $this->set(compact('product'));
         } else
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+            return $this->redirect('/');
     }
 
     /**
@@ -77,8 +80,11 @@ class ProductsController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Thêm sản phẩm');
             $this->set(compact('product'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -106,8 +112,11 @@ class ProductsController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Sửa sản phẩm');
             $this->set(compact('product'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -129,7 +138,10 @@ class ProductsController extends AppController
             }
             $this->viewBuilder()->setLayout('backend/master/master');
             return $this->redirect(['action' => 'index']);
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 }

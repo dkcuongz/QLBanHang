@@ -39,8 +39,9 @@
                         <td><?= h($order->created) ?></td>
                         <td><?= h($order->updated) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('Approval'), ['action' => 'approvalOrder', $order->id]) ?>
+                            <?php if($order->state == 1)  echo $this->Html->link(__('Approval'), ['action' => 'approvalOrder', $order->id]); ?>
                             <?= $this->Html->link(__('View'), ['action' => 'view', $order->id]) ?>
+                            <?= $this->Html->link(__('View Detail'), ['action' => 'viewDetail', $order->id]) ?>
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $order->id]) ?>
                             <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $order->id], ['confirm' => __('Are you sure you want to delete # {0}?', $order->id)]) ?>
                         </td>

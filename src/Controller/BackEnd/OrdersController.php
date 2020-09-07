@@ -35,7 +35,7 @@ class OrdersController extends AppController
             $this->set('title', 'Hóa đơn');
             $this->set(compact('orders'));
         } else
-            return $this->redirect(['prefix' => 'FrontEnd', 'controller' => 'Home', 'action' => 'index']);
+            return $this->redirect('/');
     }
 
     /**
@@ -54,8 +54,31 @@ class OrdersController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Chi tiết hóa đơn');
             $this->set(compact('order'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
+    }
+    public function viewDetail($id = null)
+    {
+        if ($this->auth->role == 1 || $this->auth->role == 2) {
+            $order = $this->Orders->get($id, [
+                'contain' => ['OrderDetail'],
+            ]);
+            $order_detail = $this->getTableLocator()->get('OrderDetail')->find()->where(['id_order' => $id])->all();
+            //$this->Orders->save($order);
+            foreach ($order_detail as $key => $value) {
+                $prd[$key] = $this->getTableLocator()->get('Products')->find()->where(['id' => $value['id_product']])->first();
+            }
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Chi tiết hóa đơn');
+            $this->set(compact('order', 'prd'));
+        }
+        if ($this->auth->role == 2)
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -65,19 +88,25 @@ class OrdersController extends AppController
      */
     public function add()
     {
-        $order = $this->Orders->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $order = $this->Orders->patchEntity($order, $this->request->getData());
-            if ($this->Orders->save($order)) {
-                $this->Flash->success(__('The order has been saved.'));
+        if ($this->auth->role == 1) {
+            $order = $this->Orders->newEmptyEntity();
+            if ($this->request->is('post')) {
+                $order = $this->Orders->patchEntity($order, $this->request->getData());
+                if ($this->Orders->save($order)) {
+                    $this->Flash->success(__('The order has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The order could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The order could not be saved. Please, try again.'));
+            $this->viewBuilder()->setLayout('backend/master/master');
+            $this->set('title', 'Thêm hóa đơn');
+            $this->set(compact('order'));
         }
-        $this->viewBuilder()->setLayout('backend/master/master');
-        $this->set('title', 'Thêm hóa đơn');
-        $this->set(compact('order'));
+        if ($this->auth->role == 2)
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -105,8 +134,11 @@ class OrdersController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Sửa hóa đơn');
             $this->set(compact('order'));
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     /**
@@ -127,8 +159,11 @@ class OrdersController extends AppController
                 $this->Flash->error(__('The order could not be deleted. Please, try again.'));
             }
             return $this->redirect(['action' => 'index']);
-        } else
+        }
+        if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 
     public function approvalOrder($id = null)
@@ -162,8 +197,10 @@ class OrdersController extends AppController
             ]);
             $mailer->setViewVars(['order' => $order, 'order_detail' => $order_detail, 'prd' => $prd]);
             $mailer->deliver();
-        } else
-            $this->Flash->error(__('Something wrong. Please, try again.'));
-        return $this->redirect(['controller' => 'Orders', 'action' => 'index']);
+        }
+        if ($this->auth->role == 2)
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
     }
 }
