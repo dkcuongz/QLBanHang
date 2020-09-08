@@ -69,7 +69,17 @@ class ProductsController extends AppController
         if ($this->auth->role == 1) {
             $product = $this->Products->newEmptyEntity();
             if ($this->request->is('post')) {
-                $product = $this->Products->patchEntity($product, $this->request->getData());
+                $files =  $this->request->getUploadedFiles();
+                $filename = $files['img']->getClientFileName();
+                // Read the file data.
+                $files['img']->getStream();
+                $files['img']->getSize();
+                $file_path =   WWW_ROOT . "frontend\img\\$filename";
+                // Move the file.
+                $files['img']->moveTo($file_path);
+                $data = $this->request->getData();
+                $data['img'] =  $filename;
+                $product = $this->Products->patchEntity($product, $data);
                 if ($this->Products->save($product)) {
                     $this->Flash->success(__('The product has been saved.'));
 
@@ -101,7 +111,17 @@ class ProductsController extends AppController
                 'contain' => [],
             ]);
             if ($this->request->is(['patch', 'post', 'put'])) {
-                $product = $this->Products->patchEntity($product, $this->request->getData());
+                $files =  $this->request->getUploadedFiles();
+                $filename = $files['img']->getClientFileName();
+                // Read the file data.
+                $files['img']->getStream();
+                $files['img']->getSize();
+                $file_path =   WWW_ROOT . "frontend\img\\$filename";
+                // Move the file.
+                $files['img']->moveTo($file_path);
+                $data = $this->request->getData();
+                $data['img'] =  $filename;
+                $product = $this->Products->patchEntity($product, $data);
                 if ($this->Products->save($product)) {
                     $this->Flash->success(__('The product has been saved.'));
 

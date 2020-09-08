@@ -19,7 +19,7 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="products view content">
-            <h3><?= __('Tên sản phẩm') ?><?= h($product->name) ?></h3>
+            <h3><?= __('Tên sản phẩm: ') ?><?= h($product->name) ?></h3>
             <table>
                 <tr>
                     <th><?= __('Tên sản phẩm') ?></th>

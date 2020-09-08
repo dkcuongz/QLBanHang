@@ -11,20 +11,21 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Products'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Danh sách sản phẩm'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
         <div class="products form content">
-            <?= $this->Form->create($product) ?>
+            <?= $this->Form->create($product,array('enctype'=>'multipart/form-data')) ?>
             <fieldset>
-                <legend><?= __('Add Product') ?></legend>
+                <legend><?= __('Thêm sản phẩm') ?></legend>
                 <?php
-                echo $this->Form->control('name');
-                echo $this->Form->control('price');
-                echo $this->Form->control('description');
-                echo $this->Form->control('img');
-                echo $this->Form->control('quantity');
+                echo $this->Form->control('name', ['label' => 'Tên sản phẩm']);
+                echo $this->Form->control('price', ['label' => 'Đơn giá']);
+                echo $this->Form->control('description', ['label' => 'Mô tả']);
+                echo $this->Form->label('Ảnh');
+                echo $this->Form->input('img', array('type'=>'file')); 
+                echo $this->Form->control('quantity', ['label' => 'Số lượng']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit'), ['class' => "btn btn-success"]) ?>
