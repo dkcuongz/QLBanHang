@@ -173,6 +173,7 @@ class OrdersController extends AppController
             $this->request->allowMethod(['post', 'get']);
             $order = $this->Orders->get($id);
             $order->state = 2;
+            $order->id_user = $this->auth->id;
             $order_detail = $this->getTableLocator()->get('OrderDetail')->find()->where(['id_order' => $id])->all();
             //$this->Orders->save($order);
             foreach ($order_detail as $key => $value) {

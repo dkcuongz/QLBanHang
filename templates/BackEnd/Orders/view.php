@@ -11,9 +11,9 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Order'), ['action' => 'edit', $order->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Order'), ['action' => 'delete', $order->id], ['confirm' => __('Are you sure you want to delete # {0}?', $order->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Orders'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Sửa đơn hàng'), ['action' => 'edit', $order->id], ['class' => 'side-nav-item']) ?>
+            <?= $this->Form->postLink(__('Xóa đơn hàng'), ['action' => 'delete', $order->id], ['confirm' => __('Are you sure you want to delete # {0}?', $order->id), 'class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Danh sách đơn hàng'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('New Order'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
@@ -22,39 +22,39 @@
             <h3><?= h($order->name) ?></h3>
             <table>
                 <tr>
-                    <th><?= __('Name') ?></th>
+                    <th><?= __('Tên khách hàng') ?></th>
                     <td><?= h($order->name) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Phone') ?></th>
+                    <th><?= __('Số điện thoại') ?></th>
                     <td><?= h($order->phone) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Address') ?></th>
+                    <th><?= __('Địa chỉ') ?></th>
                     <td><?= h($order->address) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Id') ?></th>
+                    <th><?= __('Mã hóa đơn') ?></th>
                     <td><?= $this->Number->format($order->id) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Id User') ?></th>
+                    <th><?= __('Người xác nhận') ?></th>
                     <td><?= $this->Number->format($order->id_user) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Total') ?></th>
+                    <th><?= __('Tổng tiền ') ?></th>
                     <td><?= $this->Number->format($order->total) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('State') ?></th>
-                    <td><?= $this->Number->format($order->state) ?></td>
+                    <th><?= __('Trạng thái') ?></th>
+                    <td><?php if($order->state == 1) echo "Chưa xác nhận"; else echo "Đã xác nhận";?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Created') ?></th>
+                    <th><?= __('Ngày tạo') ?></th>
                     <td><?= h($order->created) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Updated') ?></th>
+                    <th><?= __('Ngày cập nhật') ?></th>
                     <td><?= h($order->updated) ?></td>
                 </tr>
             </table>

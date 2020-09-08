@@ -36,11 +36,7 @@ class CheckoutController extends AppController
         if ($session->check('cart')) {
             $ordersTable = $this->getTableLocator()->get('Orders');
             $order = $ordersTable->newEmptyEntity();
-            if (!empty($this->auth)) {
-                $order->id_user = $this->auth->id;
-            } else {
-                $order->id_user = 1;
-            }
+            $order->id_user = 1;
             $order->name = $data['name'];
             $order->email = $data['email'];
             $order->address = $data['address'];

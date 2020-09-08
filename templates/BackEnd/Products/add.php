@@ -27,7 +27,7 @@
                 echo $this->Form->control('quantity');
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Submit'), ['class' => "btn btn-success"]) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

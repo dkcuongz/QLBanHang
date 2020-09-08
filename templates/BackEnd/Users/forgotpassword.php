@@ -24,12 +24,13 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Email</h2>
-                        <form method="POST" class="register-form" id="register-form">
-                            <div class="form-group">
-                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="email" id="name" placeholder="Your Email" />
-                            </div>
-                        </form>
+                        <?= $this->Form->create() ?>
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="email" name="email" id="name" placeholder="Your Email" required/>
+                        </div>
+                        <?= $this->Form->submit(__('Send Email'), ['class' => 'form-submit']); ?>
+                        <?= $this->Form->end() ?>
                     </div>
                     <div class="signup-image">
                         <figure><img src="<?php echo $this->Url->webroot; ?>/register_forgot/img/signup-image.jpg" alt="sing up image"></figure>

@@ -11,18 +11,18 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Sửa User'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']) ?>
+            <?= $this->Form->postLink(__('Xóa User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Danh Sách Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
         <div class="users view content">
-            <h3><?= h($user->id) ?></h3>
+            <h3><?= __('Mã User : ') ?><?=h($user->id) ?></h3>
             <table>
                 <tr>
-                    <th><?= __('Username') ?></th>
+                    <th><?= __('Tên') ?></th>
                     <td><?= h($user->username) ?></td>
                 </tr>
                 <tr>
@@ -30,31 +30,31 @@
                     <td><?= h($user->email) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Password') ?></th>
-                    <td><?= h($user->password) ?></td>
+                    <th><?= __('Mật khẩu') ?></th>
+                    <td><?php echo str_replace($user->password,$user->password, "************");  ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Role') ?></th>
-                    <td><?= h($user->role) ?></td>
+                    <th><?= __('Chức năng') ?></th>
+                    <td><?php if($user->role == 1) echo "Admin";  if($user->role == 2) echo "Nhân viên"; if($user->role == 3) echo "Khách hàng";?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Address') ?></th>
+                    <th><?= __('Địa chỉ') ?></th>
                     <td><?= h($user->address) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Id') ?></th>
+                    <th><?= __('Mã') ?></th>
                     <td><?= $this->Number->format($user->id) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Phone') ?></th>
-                    <td><?= $this->Number->format($user->phone) ?></td>
+                    <th><?= __('Số điện thoại') ?></th>
+                    <td><?= h($user->phone) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Created') ?></th>
+                    <th><?= __('Ngày tạo') ?></th>
                     <td><?= h($user->created) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Modified') ?></th>
+                    <th><?= __('Ngày cập nhật') ?></th>
                     <td><?= h($user->modified) ?></td>
                 </tr>
             </table>
