@@ -111,16 +111,18 @@ class ProductsController extends AppController
                 'contain' => [],
             ]);
             if ($this->request->is(['patch', 'post', 'put'])) {
-                $files =  $this->request->getUploadedFiles();
-                $filename = $files['img']->getClientFileName();
-                // Read the file data.
-                $files['img']->getStream();
-                $files['img']->getSize();
-                $file_path =   WWW_ROOT . "frontend\img\\$filename";
-                // Move the file.
-                $files['img']->moveTo($file_path);
                 $data = $this->request->getData();
-                $data['img'] =  $filename;
+                if (!empty($this->request->getUploadedFiles()['img']->getClientFileName())) {
+                    $files =  $this->request->getUploadedFiles();
+                    $filename = $files['img']->getClientFileName();
+                    // Read the file data.
+                    $files['img']->getStream();
+                    $files['img']->getSize();
+                    $file_path =   WWW_ROOT . "frontend\img\\$filename";
+                    // Move the file.
+                    $files['img']->moveTo($file_path);
+                    $data['img'] =  $filename;
+                } else $data['img'] =  $product->img;
                 $product = $this->Products->patchEntity($product, $data);
                 if ($this->Products->save($product)) {
                     $this->Flash->success(__('The product has been saved.'));

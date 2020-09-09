@@ -15,6 +15,7 @@ use Cake\ORM\Entity;
  * @property string|null $description
  * @property string|null $img
  * @property int|null $quantity
+ * @property int|null $detail
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $updated
  */
@@ -35,6 +36,7 @@ class Product extends Entity
         'name' => true,
         'price' => true,
         'description' => true,
+        'detail' => true,
         'img' => true,
         'quantity' => true,
         'created' => true,

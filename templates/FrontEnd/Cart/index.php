@@ -151,7 +151,7 @@ use Cake\Routing\Router;
                                         <div class="coupon">
                                             <a class="btn btn-primary" href="<?php echo Router::url(['_name' => 'checkout']); ?>"> Checkout</a>
                                         </div>
-                                        <?= $this->Form->button(__('Update')) ?>
+                                        <?= $this->Form->button(__('Update'), ['class'=>"btn-sm btn-primary"]) ?>
                                     </td>
                                 </tr>
                             </tbody>
@@ -170,7 +170,7 @@ use Cake\Routing\Router;
                                             <span class="price"><span class="amount">£20.00</span></span>
                                         </a>
 
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
+                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="">Select options</a>
                                     </li>
 
                                     <li class="product">
@@ -180,7 +180,7 @@ use Cake\Routing\Router;
                                             <span class="price"><span class="amount">£20.00</span></span>
                                         </a>
 
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
+                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="">Select options</a>
                                     </li>
                                 </ul>
                             </div>

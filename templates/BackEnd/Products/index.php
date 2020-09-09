@@ -34,6 +34,7 @@
                                         <th><?= $this->Paginator->sort('name', 'Tên sản phẩm') ?></th>
                                         <th><?= $this->Paginator->sort('price', 'Đơn giá') ?></th>
                                         <th><?= $this->Paginator->sort('description', 'Mô tả') ?></th>
+                                        <th><?= $this->Paginator->sort('detail', 'Chi tiết') ?></th>
                                         <th><?= $this->Paginator->sort('img', 'Ảnh sản phẩm') ?></th>
                                         <th><?= $this->Paginator->sort('quantity', 'Số lượng') ?></th>
                                         <th><?= $this->Paginator->sort('created', 'Ngày tạo') ?></th>
@@ -48,6 +49,7 @@
                                             <td><?= h($product->name) ?></td>
                                             <td><?= $this->Number->format($product->price) ?></td>
                                             <td><?= h($product->description) ?></td>
+                                            <td><?= h($product->detail) ?></td>
                                             <td><img src="<?php echo $this->Url->webroot; ?>/frontend/img/<?= h($product->img) ?>" alt="<?= h($product->description) ?>" width="100px" class="thumbnail"></td>
                                             <td><?= $this->Number->format($product->quantity) ?></td>
                                             <td><?= h($product->created) ?></td>

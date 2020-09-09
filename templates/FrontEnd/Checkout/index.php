@@ -21,7 +21,6 @@ use Cake\Routing\Router;
     </div>
 </div>
 
-
 <div class="single-product-area">
     <div class="zigzag-bottom"></div>
     <div class="container">
@@ -82,10 +81,6 @@ use Cake\Routing\Router;
             <div class="col-md-8">
                 <div class="product-content-right">
                     <div class="woocommerce">
-                        <div class="woocommerce-info">Returning customer?
-                            <a class="showlogin" data-toggle="collapse" href="#login-form-wrap" aria-expanded="false" aria-controls="login-form-wrap">Click here to login</a>
-                        </div>
-
                         <form id="login-form-wrap" class="login collapse" method="post">
 
 

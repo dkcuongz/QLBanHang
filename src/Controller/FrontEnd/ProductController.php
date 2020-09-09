@@ -26,7 +26,7 @@ class ProductController extends AppController
      */
     public function index()
     {
-        $products = $this->paginate($this->Products);
+        $products = $this->paginate($this->Products, ['limit' => 8]);
         $this->viewBuilder()->setLayout('frontend/master/master');
         $this->set('title', 'Sản phẩm');
         $this->set(compact('products'));

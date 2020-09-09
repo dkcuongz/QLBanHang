@@ -100,7 +100,7 @@ use Cake\Routing\Router;
                                 <div class="product-f-image">
                                     <img src="<?php echo $this->Url->webroot; ?>/frontend/img/<?= h($prd->img) ?>" alt="">
                                     <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                        <a href="<?php echo Router::url(['_name' => 'quick_add_cart', h($prd->id)]); ?>" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                         <a href="<?php echo Router::url(['_name' => 'product_detail', h($prd->id)]); ?>" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>
                                 </div>

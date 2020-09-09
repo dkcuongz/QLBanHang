@@ -43,11 +43,16 @@
                                     echo $this->Form->control('name', ['label' => 'Tên sản phẩm']);
                                     echo $this->Form->control('price', ['label' => 'Đơn giá']);
                                     echo $this->Form->control('description', ['label' => 'Mô tả']);
+                                    echo $this->Form->label('Mô tả chi tiết');
+                                    echo $this->Form->input('detail', array('type' => 'textarea', 'name' => 'detail'));
                                     echo $this->Form->label('Ảnh');
                                     echo $this->Form->input('img', array('type' => 'file')); ?>
                                     <img src="<?php echo $this->Url->webroot; ?>/frontend/img/<?= h($product->img) ?>" alt="<?= h($product->description) ?>" width="200px" class="thumbnail">
                                     <?php echo $this->Form->control('quantity', ['label' => 'Số lượng']);
                                     ?>
+                                    <script>
+                                        CKEDITOR.replace('detail');
+                                    </script>
                                 </fieldset>
                                 <?= $this->Form->button(__('Submit'), ['class' => "btn btn-success"]) ?>
                                 <?= $this->Form->end() ?>

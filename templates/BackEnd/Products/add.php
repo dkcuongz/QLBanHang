@@ -5,7 +5,7 @@
  * @var \Cake\Datasource\EntityInterface $product
  */
 ?>
-
+<?php echo $this->Html->script('ckeditor/ckeditor', array('inline' => false)); ?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
         <ol class="breadcrumb">
@@ -38,10 +38,15 @@
                                     echo $this->Form->control('name', ['label' => 'Tên sản phẩm']);
                                     echo $this->Form->control('price', ['label' => 'Đơn giá']);
                                     echo $this->Form->control('description', ['label' => 'Mô tả']);
+                                    echo $this->Form->label('Mô tả chi tiết');
+                                    echo $this->Form->input('detail', array('type' => 'textarea', 'name' =>'detail'));
                                     echo $this->Form->label('Ảnh');
                                     echo $this->Form->input('img', array('type' => 'file'));
                                     echo $this->Form->control('quantity', ['label' => 'Số lượng']);
                                     ?>
+                                    <script>
+                                        CKEDITOR.replace('detail');
+                                    </script>
                                 </fieldset>
                                 <?= $this->Form->button(__('Submit'), ['class' => "btn btn-success"]) ?>
                                 <?= $this->Form->end() ?>
