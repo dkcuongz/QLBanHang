@@ -28,7 +28,9 @@ class CategoriesController extends AppController
     public function index()
     {
         if ($this->auth->role == 1) {
-            $categories = $this->paginate($this->Categories);
+            $categories = $this->paginate($this->Categories, [
+                'contain' => ['ParentCategories'],
+            ]);
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Danh mục');
             $this->set(compact('categories'));
@@ -50,7 +52,7 @@ class CategoriesController extends AppController
     {
         if ($this->auth->role == 1) {
             $category = $this->Categories->get($id, [
-                'contain' => [],
+                'contain' => ['ParentCategories'],
             ]);
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Chi tiết danh mục');
@@ -101,8 +103,17 @@ class CategoriesController extends AppController
     {
         if ($this->auth->role == 1) {
             $category = $this->Categories->get($id, [
-                'contain' => [],
+                'contain' => ['ParentCategories'],
             ]);
+            $categories = $this->Categories->find()->all();
+            $options = array(
+                'options' =>
+                array(
+                )
+            );
+            foreach($categories as $value) {
+               $options['options'][$value->id] = $value->name;
+            }
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $category = $this->Categories->patchEntity($category, $this->request->getData());
                 if ($this->Categories->save($category)) {
@@ -114,7 +125,7 @@ class CategoriesController extends AppController
             }
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Sửa danh mục');
-            $this->set(compact('category'));
+            $this->set(compact('category', 'options'));
         }
         if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);

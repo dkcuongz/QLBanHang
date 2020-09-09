@@ -20,7 +20,7 @@
     <div class="column-responsive column-80">
         <div class="users view content">
             <h3><?= __('Mã User : ') ?><?=h($user->id) ?></h3>
-            <table>
+            <table class="table table-bordered">
                 <tr>
                     <th><?= __('Tên') ?></th>
                     <td><?= h($user->username) ?></td>

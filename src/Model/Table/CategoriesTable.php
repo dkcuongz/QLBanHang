@@ -41,6 +41,11 @@ class CategoriesTable extends Table
         $this->setTable('categories');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+        $this->belongsTo('ParentCategories', [
+            'className' => 'Categories',
+            'joinType' => 'INNER'
+        ])->setForeignKey('parent')
+            ->setDependent(true);;
     }
 
     /**

@@ -67,7 +67,6 @@ class OrdersController extends AppController
                 'contain' => ['OrderDetail'],
             ]);
             $order_detail = $this->getTableLocator()->get('OrderDetail')->find()->where(['id_order' => $id])->all();
-            //$this->Orders->save($order);
             foreach ($order_detail as $key => $value) {
                 $prd[$key] = $this->getTableLocator()->get('Products')->find()->where(['id' => $value['id_product']])->first();
             }
