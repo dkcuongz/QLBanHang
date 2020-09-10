@@ -166,7 +166,7 @@ class OrdersController extends AppController
 
     public function approvalOrder($id = null)
     {
-        if ($this->auth->role == 1) {
+        if ($this->auth->role == 1 || $this->auth->role == 2) {
             $id = $this->request->getParam('id');
             $this->request->allowMethod(['post', 'get']);
             $order = $this->Orders->get($id);
@@ -198,14 +198,12 @@ class OrdersController extends AppController
             $this->Flash->success(__('The order has been approval.'));
             return $this->redirect(['action' => 'index']);
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
     public function rejectOrder($id = null)
     {
-        if ($this->auth->role == 1) {
+        if ($this->auth->role == 1 || $this->auth->role == 2) {
             $id = $this->request->getParam('id');
             $this->request->allowMethod(['post', 'get']);
             $order = $this->Orders->get($id);
@@ -241,8 +239,6 @@ class OrdersController extends AppController
             $this->Flash->success(__('The order has been reject.'));
             return $this->redirect(['action' => 'index']);
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
