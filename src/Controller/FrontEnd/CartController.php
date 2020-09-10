@@ -14,6 +14,7 @@ class CartController extends AppController
         parent::beforeFilter($event);
         $this->Authentication->addUnauthenticatedActions(['addToCart', 'deleteCart', 'updateCart']);
     }
+
     /**
      * Index method
      *
@@ -73,6 +74,7 @@ class CartController extends AppController
         }
         $this->redirect(array("controller" => "Cart", "action" => "index"));
     }
+
     public function updateCart($id = null)
     {
         $session = $this->request->getSession();

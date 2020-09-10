@@ -69,6 +69,7 @@ $routes->scope('/admin', ['prefix' => 'BackEnd'], function (RouteBuilder $builde
     $builder->connect('/order', ['controller' => 'Orders', 'action' => 'index', 'index']);
     $builder->connect('/order/view-detail/*', ['controller' => 'Orders', 'action' => 'viewDetail', 'index']);
     $builder->connect('/orders/approval-order/{id}', ['controller' => 'Orders', 'action' => 'approvalOrder', ['_name' => 'approvalOrder']]);
+    $builder->connect('/orders/reject-order/{id}', ['controller' => 'Orders', 'action' => 'rejectOrder', ['_name' => 'rejectOrder']]);
     $builder->connect('/users/login', ['controller' => 'Users', 'action' => 'login', 'login'], ['_name' => 'login']);
     $builder->fallbacks();
 });

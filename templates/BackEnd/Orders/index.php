@@ -16,7 +16,7 @@
         </ol>
     </div>
     <!--/.row-->
- 
+
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-12">
             <div class="panel panel-primary">
@@ -55,10 +55,9 @@
                                             <td><?= h($order->created) ?></td>
                                             <td><?= h($order->updated) ?></td>
                                             <td class="actions">
+                                                <?php if ($order->state == 1)  echo $this->Html->link(__('Hủy đơn'), ['action' => 'rejectOrder', $order->id]); ?>
                                                 <?php if ($order->state == 1)  echo $this->Html->link(__('Duyệt đơn'), ['action' => 'approvalOrder', $order->id]); ?>
-                                                <?= $this->Html->link(__('Xem'), ['action' => 'view', $order->id]) ?>
-                                                <?= $this->Html->link(__('Xem chi tiết'), ['action' => 'viewDetail', $order->id]) ?>
-                                                <?= $this->Html->link(__('Sửa'), ['action' => 'edit', $order->id]) ?>
+                                                <?= $this->Html->link(__('Chi tiết'), ['action' => 'viewDetail', $order->id]) ?>
                                                 <?= $this->Form->postLink(__('Xóa'), ['action' => 'delete', $order->id], ['confirm' => __('Are you sure you want to delete # {0}?', $order->id)]) ?>
                                             </td>
                                         </tr>

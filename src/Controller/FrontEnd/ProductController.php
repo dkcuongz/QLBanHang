@@ -20,6 +20,7 @@ class ProductController extends AppController
         $this->loadComponent('Data');
         $this->Authentication->allowUnauthenticated(['getCate']);
     }
+
     /**
      * Index method
      *

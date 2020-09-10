@@ -125,7 +125,6 @@ class OrdersController extends AppController
                 $order = $this->Orders->patchEntity($order, $this->request->getData());
                 if ($this->Orders->save($order)) {
                     $this->Flash->success(__('The order has been saved.'));
-
                     return $this->redirect(['action' => 'index']);
                 }
                 $this->Flash->error(__('The order could not be saved. Please, try again.'));
@@ -174,11 +173,10 @@ class OrdersController extends AppController
             $order->state = 2;
             $order->id_user = $this->auth->id;
             $order_detail = $this->getTableLocator()->get('OrderDetail')->find()->where(['id_order' => $id])->all();
-            //$this->Orders->save($order);
+            $this->Orders->save($order);
             foreach ($order_detail as $key => $value) {
                 $prd[$key] = $this->getTableLocator()->get('Products')->find()->where(['id' => $value['id_product']])->first();
             }
-            $this->Flash->success(__('Successful !!'));
             $mailer = new Mailer();
             $mailer->setTransport('gmail');
             $mailer->setEmailFormat('html')
@@ -197,6 +195,51 @@ class OrdersController extends AppController
             ]);
             $mailer->setViewVars(['order' => $order, 'order_detail' => $order_detail, 'prd' => $prd]);
             $mailer->deliver();
+            $this->Flash->success(__('The order has been approval.'));
+            return $this->redirect(['action' => 'index']);
+        }
+        if ($this->auth->role == 2)
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role != 1 && $this->auth->role != 2)
+            return $this->redirect('/');
+    }
+    public function rejectOrder($id = null)
+    {
+        if ($this->auth->role == 1) {
+            $id = $this->request->getParam('id');
+            $this->request->allowMethod(['post', 'get']);
+            $order = $this->Orders->get($id);
+            $order->state = 3;
+            $order->id_user = $this->auth->id;
+            $order_detail = $this->getTableLocator()->get('OrderDetail')->find()->where(['id_order' => $id])->all();
+            $this->Orders->save($order);
+            foreach ($order_detail as $key => $value) {
+                $productTable = $this->getTableLocator()->get('Products');
+                $prd[$key] = $productTable->find()->where(['id' => $value['id_product']])->first();
+                $prd[$key]->quantity = $prd[$key]->quantity + $value['quantity'];
+                $prd[$key]->qty_sold = $prd[$key]->qty_sold - $value['quantity'];
+                $productTable->save($prd[$key]);
+            }
+            $mailer = new Mailer();
+            $mailer->setTransport('gmail');
+            $mailer->setEmailFormat('html')
+                ->setSubject("Hủy đơn hàng")
+                ->setTo($this->auth->email)
+                ->setFrom('dkboyWlove@gmail.com')
+                ->viewBuilder()
+                ->setTemplate('emailreject');
+            $mailer->setAttachments([
+                'logo.png' => [
+                    'file' => WWW_ROOT . '/email/logo.png',
+                    'mimetype' => 'image/png',
+                    'contentId' => 'logo12',
+                    'contentDisposition' => false
+                ]
+            ]);
+            $mailer->setViewVars(['order' => $order, 'order_detail' => $order_detail, 'prd' => $prd]);
+            $mailer->deliver();
+            $this->Flash->success(__('The order has been reject.'));
+            return $this->redirect(['action' => 'index']);
         }
         if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
