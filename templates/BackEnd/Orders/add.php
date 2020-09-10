@@ -22,7 +22,6 @@
                 <div class="panel-body">
                     <div class="bootstrap-table">
                         <?= $this->Flash->render() ?>
-                        <?= $this->fetch('content') ?>
                         <aside class="column">
                             <div class="side-nav">
                                 <h4 class="heading"><?= __('Actions') ?></h4>

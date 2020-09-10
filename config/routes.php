@@ -56,12 +56,13 @@ $routes->scope('/', ['prefix' => 'FrontEnd'], function (RouteBuilder $builder) {
     $builder->connect('users/profile', ['controller' => 'Home', 'action' => 'getProfile'], ['_name' => 'profile']);
     $builder->connect('checkout', ['controller' => 'Checkout', 'action' => 'index'], ['_name' => 'checkout']);
     $builder->connect('postcheckout', ['controller' => 'Checkout', 'action' => 'postCheckout'], ['_name' => 'postCheckout']);
+    $builder->connect('getCate/*', ['controller' => 'Product', 'action' => 'getCate'], ['_name' => 'getCate']);
     $builder->fallbacks();
 });
 
 $routes->scope('/admin', ['prefix' => 'BackEnd'], function (RouteBuilder $builder) {
     $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'logout']);
-    $builder->connect('/', ['controller' => 'Home', 'action' => 'index', 'index']);
+    $builder->connect('/home', ['controller' => 'Home', 'action' => 'index', 'index']);
     $builder->connect('/user', ['controller' => 'Users', 'action' => 'index', 'index']);
     $builder->connect('/category', ['controller' => 'Categories', 'action' => 'index', 'index']);
     $builder->connect('/product', ['controller' => 'Products', 'action' => 'index', 'index']);

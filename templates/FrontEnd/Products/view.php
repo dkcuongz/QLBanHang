@@ -7,8 +7,6 @@
 
 use Cake\Routing\Router;
 ?>
-<?= $this->Flash->render() ?>
-<?= $this->fetch('content') ?>
 <div class="product-big-title-area">
     <div class="container">
         <div class="row">
@@ -57,6 +55,7 @@ use Cake\Routing\Router;
                     </div>
 
                     <div class="row">
+                    <?= $this->Flash->render() ?>
                         <div class="col-sm-6">
                             <div class="product-images">
                                 <div class="product-main-img">

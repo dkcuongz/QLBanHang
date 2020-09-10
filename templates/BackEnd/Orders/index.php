@@ -25,7 +25,6 @@
                     <div class="bootstrap-table">
                         <div class="table-responsive">
                             <?= $this->Flash->render() ?>
-                            <?= $this->fetch('content') ?>
                             <?= $this->Html->link(__('New Order'), ['action' => 'add'], ['class' => 'button float-right']) ?>
                             <table class="table table-bordered">
                                 <thead>

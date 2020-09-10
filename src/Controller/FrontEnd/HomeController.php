@@ -26,16 +26,27 @@ class HomeController extends AppController
     {
         $this->set('title', 'Home');
         $this->viewBuilder()->setLayout('frontend/master/master');
-        $data = $this->getTableLocator()->get('Products')->find()->limit(10);
-        $this->set(compact('data'));
+        $data = $this->getTableLocator()->get('Products')->find()->where(['quantity >' => 0])->limit(10);
+        $prd_sell = $this->getTableLocator()->get('Products')->find('all', [
+            'order' => ['Products.qty_sold' => 'DESC']
+        ])->limit(4);
+        $prd_new = $this->getTableLocator()->get('Products')->find('all', [
+            'order' => ['Products.created' => 'DESC']
+        ])->limit(4);
+        $prd_ran = $this->getTableLocator()->get('Products')->find('all', [
+            'order' => ['Products.updated' => 'DESC']
+        ])->limit(4);
+        $this->set(compact('data', 'prd_sell', 'prd_new', 'prd_ran'));
         return $this->render('index');
     }
+
     public function getProfile($id = null)
     {
         $this->set('title', 'Profile');
         $this->viewBuilder()->setLayout('frontend/master/master');
         return $this->render('profile');
     }
+
     public function postUser($id = null)
     {
         $this->request->allowMethod(['patch', 'post', 'put']);
@@ -56,5 +67,34 @@ class HomeController extends AppController
         }
         $userTable->save($user, ['checkRules' => false, 'atomic' => false]);
         return  $this->redirect(array("controller" => "Home", "action" => "getProfile"));
+    }
+
+    public function search()
+    {
+        $data = $this->request->getData();
+        if (!empty($data['search'])) {
+            $products = $this->getTableLocator()->get('Products')->find('all', [
+                'conditions' => [['name LIKE' => '%' . $data['search'] . '%']]
+            ])->all();
+            $prd_sell = $this->getTableLocator()->get('Products')->find('all', [
+                'order' => ['Products.qty_sold' => 'DESC']
+            ])->limit(4);
+            $prd_new = $this->getTableLocator()->get('Products')->find('all', [
+                'order' => ['Products.created' => 'DESC']
+            ])->limit(4);
+            $prd_ran = $this->getTableLocator()->get('Products')->find('all', [
+                'order' => ['Products.updated' => 'DESC']
+            ])->limit(4);
+            $this->viewBuilder()->setLayout('frontend/master/master');
+            $this->set('title', 'Sản phẩm');
+            $this->set('page', 'Shop');
+            $this->set(compact('products', 'prd_sell', 'prd_new', 'prd_ran'));
+            return $this->render('search');
+            $this->Flash->error(__('Data not found!'));
+            return  $this->redirect($this->referer());
+        } else {
+            $this->Flash->error(__('Nothing to search.'));
+            return  $this->redirect($this->referer());
+        }
     }
 }

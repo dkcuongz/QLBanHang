@@ -22,7 +22,6 @@
                 <div class="panel-body">
                     <div>
                         <?= $this->Flash->render() ?>
-                        <?= $this->fetch('content') ?>
                         <div class="categories index content">
                             <aside class="column">
                                 <div class="side-nav">

@@ -29,11 +29,19 @@ class CartController extends AppController
                 $total += $value['price'] * $value['quantity'];
             }
         }
+        $prd_sell = $this->getTableLocator()->get('Products')->find('all', [
+            'order' => ['Products.qty_sold' => 'DESC']
+        ])->limit(4);
+        $prd_new = $this->getTableLocator()->get('Products')->find('all', [
+            'order' => ['Products.created' => 'DESC']
+        ])->limit(4);
+        $prd_ran = $this->getTableLocator()->get('Products')->find('all', [
+            'order' => ['Products.updated' => 'DESC']
+        ])->limit(4);
         $this->set('title', 'Cart');
         $this->viewBuilder()->setLayout('frontend/master/master');
         $this->set('Cart', $session->read('cart'));
-        $this->set('total', $total);
-        $this->set('count', $count);
+        $this->set(compact('count', 'total', 'prd_sell', 'prd_new', 'prd_ran'));
         return $this->render('index');
     }
 

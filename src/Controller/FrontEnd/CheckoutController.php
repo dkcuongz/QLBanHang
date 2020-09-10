@@ -24,8 +24,18 @@ class CheckoutController extends AppController
     public function index()
     {
         $session = $this->request->getSession();
+        $prd_sell = $this->getTableLocator()->get('Products')->find('all', [
+            'order' => ['Products.qty_sold' => 'DESC']
+        ])->limit(4);
+        $prd_new = $this->getTableLocator()->get('Products')->find('all', [
+            'order' => ['Products.created' => 'DESC']
+        ])->limit(4);
+        $prd_ran = $this->getTableLocator()->get('Products')->find('all', [
+            'order' => ['Products.updated' => 'DESC']
+        ])->limit(4);
         $this->set('Cart', $session->read('cart'));
         $this->set('title', 'Checkout');
+        $this->set(compact('prd_sell', 'prd_new', 'prd_ran'));
         $this->viewBuilder()->setLayout('frontend/master/master');
         return $this->render('index');
     }
@@ -57,10 +67,15 @@ class CheckoutController extends AppController
                     $orderdtails->quantity = $value['quantity'];
                     $orderdtails->price = $value['price'];
                     $orderdtailsTable->save($orderdtails);
+                    $productTable = $this->getTableLocator()->get('Products');
+                    $prd = $productTable->find()->where(['id' => $key])->first();
+                    $prd->quantity = $prd->quantity - $value['quantity'];
+                    $prd->qty_sold = $prd->qty_sold + $value['quantity'];
+                    $productTable->save($prd);
                 }
-                $this->Flash->error(__('Checkout Successfull.'));
                 $connection->commit();
                 $session->destroy();
+                $this->Flash->success(__('Checkout Successfull.'));
                 return  $this->redirect(array("controller" => "Checkout", "action" => "index"));
             }
             $this->Flash->error(__('Nothing to checkout.'));

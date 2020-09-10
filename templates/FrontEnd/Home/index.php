@@ -7,8 +7,6 @@
 
 use Cake\Routing\Router;
 ?>
-<?= $this->Flash->render() ?>
-<?= $this->fetch('content') ?>
 <div class="slider-area">
     <!-- Slider -->
     <div class="block-slider block-slider4">
@@ -86,7 +84,7 @@ use Cake\Routing\Router;
         </div>
     </div>
 </div> <!-- End promo area -->
-
+<?= $this->Flash->render() ?>
 <div class="maincontent-area">
     <div class="zigzag-bottom"></div>
     <div class="container">
@@ -148,145 +146,67 @@ use Cake\Routing\Router;
             <div class="col-md-4">
                 <div class="single-product-widget">
                     <h2 class="product-wid-title">Top Sellers</h2>
-                    <a href="" class="wid-view-more">View All</a>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                    <a href="<?php echo Router::url(['_name' => 'product']); ?>" class="wid-view-more">View All</a>
+                    <?php foreach ($prd_sell as $prd) : ?>
+                        <div class="single-wid-product">
+                            <a href="<?php echo Router::url(['_name' => 'product_detail', h($prd->id)]); ?>"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/<?= h($prd->img) ?>" alt="" class="product-thumb"></a>
+                            <h2><a href="<?php echo Router::url(['_name' => 'product_detail', h($prd->id)]); ?>"><?= h($prd->name) ?></a></h2>
+                            <div class="product-wid-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product-wid-price">
+                                <ins><?= $this->Number->format($prd->price) ?> VNĐ</ins> <del>$425.00</del>
+                            </div>
                         </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-thumb-2.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Apple new mac book 2015</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-thumb-3.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Apple new i phone 6</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="single-product-widget">
                     <h2 class="product-wid-title">Recently Viewed</h2>
-                    <a href="#" class="wid-view-more">View All</a>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-thumb-4.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Sony playstation microsoft</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                    <a href="<?php echo Router::url(['_name' => 'product']); ?>" class="wid-view-more">View All</a>
+                    <?php foreach ($prd_ran as $prd) : ?>
+                        <div class="single-wid-product">
+                            <a href="<?php echo Router::url(['_name' => 'product_detail', h($prd->id)]); ?>"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/<?= h($prd->img) ?>" alt="" class="product-thumb"></a>
+                            <h2><a href="<?php echo Router::url(['_name' => 'product_detail', h($prd->id)]); ?>"><?= h($prd->name) ?></a></h2>
+                            <div class="product-wid-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product-wid-price">
+                                <ins><?= $this->Number->format($prd->price) ?> VNĐ</ins> <del>$425.00</del>
+                            </div>
                         </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Sony Smart Air Condtion</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-thumb-2.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Samsung gallaxy note 4</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="single-product-widget">
                     <h2 class="product-wid-title">Top New</h2>
-                    <a href="#" class="wid-view-more">View All</a>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-thumb-3.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Apple new i phone 6</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                    <a href="<?php echo Router::url(['_name' => 'product']); ?>" class="wid-view-more">View All</a>
+                    <?php foreach ($prd_new as $prd) : ?>
+                        <div class="single-wid-product">
+                            <a href="<?php echo Router::url(['_name' => 'product_detail', h($prd->id)]); ?>"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/<?= h($prd->img) ?>" alt="" class="product-thumb"></a>
+                            <h2><a href="<?php echo Router::url(['_name' => 'product_detail', h($prd->id)]); ?>"><?= h($prd->name) ?></a></h2>
+                            <div class="product-wid-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product-wid-price">
+                                <ins><?= $this->Number->format($prd->price) ?> VNĐ</ins> <del>$425.00</del>
+                            </div>
                         </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-thumb-4.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Samsung gallaxy note 4</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="<?php echo $this->Url->webroot; ?>/frontend/img/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Sony playstation microsoft</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

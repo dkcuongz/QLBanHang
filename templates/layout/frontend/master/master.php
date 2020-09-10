@@ -27,7 +27,6 @@
 
     <?php include('header.php') ?>
     <!-- End mainmenu area -->
-    <?= $this->Flash->render() ?>
     <?= $this->fetch('content') ?>
     <?php include('footer.php') ?>
  <!-- End footer bottom area -->

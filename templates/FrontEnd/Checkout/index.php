@@ -7,8 +7,6 @@
 
 use Cake\Routing\Router;
 ?>
-<?= $this->Flash->render() ?>
-<?= $this->fetch('content') ?>
 <div class="product-big-title-area">
     <div class="container">
         <div class="row">
@@ -28,52 +26,36 @@ use Cake\Routing\Router;
             <div class="col-md-4">
                 <div class="single-sidebar">
                     <h2 class="sidebar-title">Search Products</h2>
-                    <form action="">
-                        <input type="text" placeholder="Search products...">
-                        <input type="submit" value="Search">
-                    </form>
+                    <?php echo $this->Form->create(null, [
+                        'url' => [
+                            'controller' => 'Home',
+                            'action' => 'search'
+                        ]
+                    ]); ?>
+                    <input name="search" type="text" placeholder="Search products...">
+                    <?= $this->Form->button(__('Search')) ?>
+                    <?= $this->Form->end() ?>
                 </div>
 
                 <div class="single-sidebar">
                     <h2 class="sidebar-title">Products</h2>
-                    <div class="thubmnail-recent">
-                        <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                        <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                        <div class="product-sidebar-price">
-                            <ins>$700.00</ins> <del>$100.00</del>
+                    <?php foreach ($prd_sell as $prd) : ?>
+                        <div class="thubmnail-recent">
+                            <img src="<?php echo $this->Url->webroot; ?>/frontend/img/<?= h($prd->img) ?>" class="recent-thumb" alt="">
+                            <h2><a href="<?php echo Router::url(['_name' => 'product_detail', h($prd->id)]); ?>"><?= h($prd->name) ?></a></h2>
+                            <div class="product-sidebar-price">
+                                <ins><?= $this->Number->format($prd->price) ?> VNĐ</ins> <del>$800.00</del>
+                            </div>
                         </div>
-                    </div>
-                    <div class="thubmnail-recent">
-                        <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                        <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                        <div class="product-sidebar-price">
-                            <ins>$700.00</ins> <del>$100.00</del>
-                        </div>
-                    </div>
-                    <div class="thubmnail-recent">
-                        <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                        <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                        <div class="product-sidebar-price">
-                            <ins>$700.00</ins> <del>$100.00</del>
-                        </div>
-                    </div>
-                    <div class="thubmnail-recent">
-                        <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                        <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                        <div class="product-sidebar-price">
-                            <ins>$700.00</ins> <del>$100.00</del>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <div class="single-sidebar">
                     <h2 class="sidebar-title">Recent Posts</h2>
                     <ul>
-                        <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-                        <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-                        <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-                        <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-                        <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+                        <?php foreach ($prd_ran as $prd) : ?>
+                            <li><a href="<?php echo Router::url(['_name' => 'product_detail', h($prd->id)]); ?>"><?= h($prd->name) ?></a></li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </div>
@@ -113,6 +95,7 @@ use Cake\Routing\Router;
                     <?php echo $this->Form->create(null, ['url' => ['controller' => 'Checkout', 'action' => 'postCheckout']]); ?>
 
                     <div id="customer_details" class="col2-set">
+                        <?= $this->Flash->render() ?>
                         <div class="col-1">
                             <div class="woocommerce-billing-fields">
                                 <h3>Billing Details</h3>
@@ -145,7 +128,7 @@ use Cake\Routing\Router;
                                 <p id="billing_phone_field" class="form-row form-row-last validate-required validate-phone">
                                     <label class="" for="billing_phone">Phone <abbr title="required" class="required">*</abbr>
                                     </label>
-                                    <input type="text" class="input-text form-control" name="phone" placeholder="Name" required value="<?php if ($auth) {
+                                    <input type="text" class="input-text form-control" name="phone" placeholder="Phone" required value="<?php if ($auth) {
                                                                                                                                             echo h($auth->phone);
                                                                                                                                         } ?>" />
                                 </p>

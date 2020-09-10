@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface[]|\Cake\Collection\CollectionInterface $categories
  */
+
 use Cake\Routing\Router;
 
 ?>
@@ -12,17 +14,17 @@ use Cake\Routing\Router;
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
-                        <?php if ($auth){
-                             echo "<li><a href='".Router::url(['_name' => 'profile'])."'><i class='fa fa-user'></i> $auth->username</a></li>";
+                        <?php if ($auth) {
+                            echo "<li><a href='" . Router::url(['_name' => 'profile']) . "'><i class='fa fa-user'></i> $auth->username</a></li>";
                         }
-                         ?>
+                        ?>
                         <li><a href="<?php echo Router::url(['_name' => 'cart']); ?>"><i class="fa fa-user"></i> My Cart</a></li>
                         <li><a href="<?php echo Router::url(['_name' => 'checkout']); ?>"><i class="fa fa-user"></i> Checkout</a></li>
-                        <?php if ($auth){
-                             echo "<li><a href='".Router::url(['_name' => 'logout'])."'><i class='fa fa-user'></i> Logout</a></li>";
+                        <?php if ($auth) {
+                            echo "<li><a href='" . Router::url(['_name' => 'logout']) . "'><i class='fa fa-user'></i> Logout</a></li>";
                         } else
-                        echo "<li><a href='".Router::url(['_name' => 'login'])."'><i class='fa fa-user'></i> Login</a></li>";
-                         ?>
+                            echo "<li><a href='" . Router::url(['_name' => 'login']) . "'><i class='fa fa-user'></i> Login</a></li>";
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -64,7 +66,17 @@ use Cake\Routing\Router;
                     <li><a href="<?php echo Router::url(['_name' => 'product']); ?>">Shop page</a></li>
                     <li><a href="<?php echo Router::url(['_name' => 'cart']); ?>">Cart</a></li>
                     <li><a href="<?php echo Router::url(['_name' => 'checkout']); ?>">Checkout</a></li>
-                    <li><a href="#">Category</a></li>
+                    <li class="hover-none">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Danh mục
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                            <?php foreach($cate as $value) :?>    
+                                <li><a href="<?php echo Router::url(['_name' => 'getCate', $value->id]); ?>"><?php echo $value->name; ?></a></li>
+                            <?php endforeach; ?>    
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>

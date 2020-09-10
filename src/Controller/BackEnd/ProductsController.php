@@ -68,6 +68,7 @@ class ProductsController extends AppController
     {
         if ($this->auth->role == 1) {
             $product = $this->Products->newEmptyEntity();
+            $cate = $this->getTableLocator()->get('Categories')->find()->where(['parent >' => 0])->all();
             if ($this->request->is('post')) {
                 $files =  $this->request->getUploadedFiles();
                 $filename = $files['img']->getClientFileName();
@@ -89,7 +90,7 @@ class ProductsController extends AppController
             }
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Thêm sản phẩm');
-            $this->set(compact('product'));
+            $this->set(compact('product', 'cate'));
         }
         if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);
@@ -110,6 +111,7 @@ class ProductsController extends AppController
             $product = $this->Products->get($id, [
                 'contain' => [],
             ]);
+            $cate = $this->getTableLocator()->get('Categories')->find()->where(['parent >' => 0])->all();
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $data = $this->request->getData();
                 if (!empty($this->request->getUploadedFiles()['img']->getClientFileName())) {
@@ -133,7 +135,7 @@ class ProductsController extends AppController
             }
             $this->viewBuilder()->setLayout('backend/master/master');
             $this->set('title', 'Sửa sản phẩm');
-            $this->set(compact('product'));
+            $this->set(compact('product', 'cate'));
         }
         if ($this->auth->role == 2)
             return $this->redirect(['controller' => 'Home', 'action' => 'index']);

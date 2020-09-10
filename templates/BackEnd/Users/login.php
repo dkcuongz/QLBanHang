@@ -20,7 +20,6 @@
         <section class="signup">
             <div class="container">
                 <?= $this->Flash->render() ?>
-                <?= $this->fetch('content') ?>
                 <div class="signup-content">
                     <div class="signup-form">
                         <?= $this->Flash->render() ?>

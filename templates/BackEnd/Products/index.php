@@ -25,7 +25,6 @@
                     <div class="bootstrap-table">
                         <div class="table-responsive">
                             <?= $this->Flash->render() ?>
-                            <?= $this->fetch('content') ?>
                             <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'button float-right']) ?>
                             <table  class="table table-bordered">
                                 <thead>
@@ -49,13 +48,13 @@
                                             <td><?= h($product->name) ?></td>
                                             <td><?= $this->Number->format($product->price) ?></td>
                                             <td><?= h($product->description) ?></td>
-                                            <td><?= h($product->detail) ?></td>
+                                            <td width = "15%"><?= h($product->detail) ?></td>
                                             <td><img src="<?php echo $this->Url->webroot; ?>/frontend/img/<?= h($product->img) ?>" alt="<?= h($product->description) ?>" width="100px" class="thumbnail"></td>
                                             <td><?= $this->Number->format($product->quantity) ?></td>
                                             <td><?= h($product->created) ?></td>
                                             <td><?= h($product->updated) ?></td>
                                             <td class="actions">
-                                                <?= $this->Html->link(__('Xem chi tiết'), ['action' => 'view', $product->id]) ?>
+                                                <?= $this->Html->link(__('Chi tiết'), ['action' => 'view', $product->id]) ?>
                                                 <?= $this->Html->link(__('Sửa'), ['action' => 'edit', $product->id]) ?>
                                                 <?= $this->Form->postLink(__('Xóa'), ['action' => 'delete', $product->id], ['confirm' => __('Are you sure you want to delete # {0}?', $product->id)]) ?>
                                             </td>

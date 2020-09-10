@@ -21,7 +21,6 @@
                 <div class="panel-body">
                     <div>
                         <?= $this->Flash->render() ?>
-                        <?= $this->fetch('content') ?>
                         <div class="categories index content">
                             <?= $this->Html->link(__('New Category'), ['action' => 'add'], ['class' => 'button float-right']) ?>
                             <h3><?= __('Danh mục') ?></h3>

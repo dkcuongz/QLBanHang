@@ -8,11 +8,10 @@
 use Cake\Routing\Router;
 ?>
 <div class="container">
-    <?= $this->Flash->render() ?>
-    <?= $this->fetch('content') ?>
     <h1>Edit Profile</h1>
     <hr>
     <div class="row">
+    <?= $this->Flash->render() ?>
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">

@@ -23,9 +23,9 @@ use Cake\Routing\Router;
 <div class="single-product-area">
     <div class="zigzag-bottom"></div>
     <div class="container">
-    <?= $this->Flash->render() ?>
+        <?= $this->Flash->render() ?>
         <div class="row">
-            <?php foreach ($products as $prd) : ?>
+            <?php foreach ($products as $prd) :?>
                 <div class="col-md-3 col-sm-6">
                     <div class="single-shop-product">
                         <div class="product-upper">
@@ -41,24 +41,6 @@ use Cake\Routing\Router;
                     </div>
                 </div>
             <?php endforeach; ?>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-pagination text-center">
-                    <nav>
-                        <ul class="pagination">
-                            <?= $this->Paginator->first('<< ' . __('first')) ?>
-                            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                            <?= $this->Paginator->numbers() ?>
-                            <?= $this->Paginator->next(__('next') . ' >') ?>
-                            <?= $this->Paginator->last(__('last') . ' >>') ?>
-                            </li>
-                        </ul>
-                        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-                    </nav>
-                </div>
-            </div>
         </div>
     </div>
 </div>

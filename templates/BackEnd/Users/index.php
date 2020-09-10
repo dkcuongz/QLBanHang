@@ -22,7 +22,6 @@
                 <div class="panel-body">
                     <div class="bootstrap-table">
                     <?= $this->Flash->render() ?>
-                            <?= $this->fetch('content') ?>
                             <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button float-right']) ?>
                             <table class="table table-bordered">
                                 <thead>

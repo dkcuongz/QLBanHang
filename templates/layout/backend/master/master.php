@@ -24,7 +24,6 @@
 	<!-- sidebar left-->
 	<?php include('sidebar.php') ?>
     <!--/. end sidebar left-->
-	<?= $this->Flash->render() ?>
     <?= $this->fetch('content') ?>
 	<!-- javascript -->
 	<?= $this->Html->script(['../backend/js/jquery-1.11.1.min', '../backend/js/bootstrap.min', '../backend/js/chart.min','../backend/js/lumino.glyphs']) ?>

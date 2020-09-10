@@ -22,7 +22,6 @@
                 <div class="panel-body">
                     <div class="bootstrap-table">
                         <?= $this->Flash->render() ?>
-                        <?= $this->fetch('content') ?>
                         <aside class="column">
                             <div class="side-nav">
                                 <h4 class="heading"><?= __('Actions') ?></h4>
@@ -36,10 +35,15 @@
                                     <legend><?= __('Thêm sản phẩm') ?></legend>
                                     <?php
                                     echo $this->Form->control('name', ['label' => 'Tên sản phẩm']);
+                                    foreach ($cate as $value) {
+                                        $arr_cate[$value['id']] = $value['name'];
+                                    }
+                                    echo $this->Form->label('Loại mục sản phẩm');
+                                    echo $this->Form->select('id_cate', $arr_cate);
                                     echo $this->Form->control('price', ['label' => 'Đơn giá']);
                                     echo $this->Form->control('description', ['label' => 'Mô tả']);
                                     echo $this->Form->label('Mô tả chi tiết');
-                                    echo $this->Form->input('detail', array('type' => 'textarea', 'name' =>'detail'));
+                                    echo $this->Form->input('detail', array('type' => 'textarea', 'name' => 'detail'));
                                     echo $this->Form->label('Ảnh');
                                     echo $this->Form->input('img', array('type' => 'file'));
                                     echo $this->Form->control('quantity', ['label' => 'Số lượng']);
