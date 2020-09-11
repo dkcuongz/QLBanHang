@@ -19,7 +19,7 @@ class HomeController extends AppController
 
         $this->Authentication->allowUnauthenticated(['login']);
     }
-    
+
     /**
      * Index method
      *

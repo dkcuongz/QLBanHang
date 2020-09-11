@@ -108,11 +108,10 @@ class CategoriesController extends AppController
             $categories = $this->Categories->find()->all();
             $options = array(
                 'options' =>
-                array(
-                )
+                array()
             );
-            foreach($categories as $value) {
-               $options['options'][$value->id] = $value->name;
+            foreach ($categories as $value) {
+                $options['options'][$value->id] = $value->name;
             }
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $category = $this->Categories->patchEntity($category, $this->request->getData());

@@ -45,7 +45,7 @@ class OrdersTable extends Table
         $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
         $this->hasMany('OrderDetail')->setForeignKey('id_order')
-        ->setDependent(true);;
+            ->setDependent(true);;
     }
 
     /**

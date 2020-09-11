@@ -16,7 +16,7 @@ class CheckoutController extends AppController
         parent::beforeFilter($event);
         $this->Authentication->addUnauthenticatedActions(['getCheckout', 'postCheckout']);
     }
-    
+
     /**
      * Index method
      *
