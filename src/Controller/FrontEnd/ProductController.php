@@ -14,6 +14,7 @@ use App\Controller\AppController;
 class ProductController extends AppController
 {
     protected $name = "Products";
+    
     public function initialize(): void
     {
         parent::initialize();

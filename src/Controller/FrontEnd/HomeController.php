@@ -7,7 +7,6 @@ namespace App\Controller\FrontEnd;
 use App\Controller\AppController;
 use Cake\Log\Log;
 use Cake\ORM\Locator\LocatorAwareTrait;
-use App\Model\Entity\User;
 
 class HomeController extends AppController
 {

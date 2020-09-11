@@ -32,13 +32,13 @@ class UsersController extends AppController
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             // redirect to /articles after login success
-            if ($result = $this->Authentication->getResult()->getData()->id == 1) {
+            if ($result = $this->Authentication->getResult()->getData()->id == 1 || $result = $this->Authentication->getResult()->getData()->id == 2) {
                 $redirect = $this->request->getQuery('redirect', [
                     'controller' => 'Home',
                     'action' => 'index',
                 ]);
             }
-            if ($result = $this->Authentication->getResult()->getData()->id != 1) {
+            if ($result = $this->Authentication->getResult()->getData()->id == 3) {
                 $redirect = $this->request->getQuery('redirect', [
                     'prefix' => 'FrontEnd',
                     'controller' => 'Home',
@@ -80,8 +80,10 @@ class UsersController extends AppController
             $this->set('title', 'Thành viên');
             $this->set(compact('users'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -103,8 +105,10 @@ class UsersController extends AppController
             $this->set('title', 'Chi tiết thành viên');
             $this->set(compact('user'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -131,8 +135,10 @@ class UsersController extends AppController
             $this->set('title', 'Thêm thành viên');
             $this->set(compact('user'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -163,8 +169,10 @@ class UsersController extends AppController
             $this->set('title', 'Sửa thành viên');
             $this->set(compact('user'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -189,8 +197,10 @@ class UsersController extends AppController
 
             return $this->redirect(['action' => 'index']);
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }

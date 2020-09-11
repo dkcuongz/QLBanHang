@@ -1,5 +1,10 @@
+<?php
+
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-	<?= $this->Flash->render() ?>
 	<div class="row">
 		<ol class="breadcrumb col-lg-12">
 			<li><a href="#"><svg class="glyph stroked home">
@@ -67,6 +72,7 @@
 
 	<div class="row">
 		<div class="col-lg-12">
+			<?= $this->Flash->render() ?>
 			<div class="panel panel-default">
 				<div class="panel-heading">Biểu đồ doanh thu</div>
 				<div class="panel-body">

@@ -33,10 +33,10 @@ class ProductsController extends AppController
             $this->set('title', 'Sản phẩm');
             $this->set(compact('products'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
-        if ($this->auth->role != 1 && $this->auth->role != 2)
+        if ($this->auth->role != 1 && $this->auth->role != 2) {
+            $this->Flash->error(__('You do not permission.'));
             return $this->redirect('/');
+        }
     }
 
     /**
@@ -92,8 +92,10 @@ class ProductsController extends AppController
             $this->set('title', 'Thêm sản phẩm');
             $this->set(compact('product', 'cate'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -137,8 +139,10 @@ class ProductsController extends AppController
             $this->set('title', 'Sửa sản phẩm');
             $this->set(compact('product', 'cate'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -163,8 +167,10 @@ class ProductsController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             return $this->redirect(['action' => 'index']);
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }

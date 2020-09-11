@@ -35,8 +35,10 @@ class CategoriesController extends AppController
             $this->set('title', 'Danh mục');
             $this->set(compact('categories'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -58,8 +60,10 @@ class CategoriesController extends AppController
             $this->set('title', 'Chi tiết danh mục');
             $this->set(compact('category'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -86,8 +90,10 @@ class CategoriesController extends AppController
             $this->set('title', 'Thêm danh mục');
             $this->set(compact('category'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -126,8 +132,10 @@ class CategoriesController extends AppController
             $this->set('title', 'Sửa danh mục');
             $this->set(compact('category', 'options'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -152,8 +160,10 @@ class CategoriesController extends AppController
             $this->viewBuilder()->setLayout('backend/master/master');
             return $this->redirect(['action' => 'index']);
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }

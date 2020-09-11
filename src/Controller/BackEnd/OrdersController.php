@@ -55,11 +55,10 @@ class OrdersController extends AppController
             $this->set('title', 'Chi tiết hóa đơn');
             $this->set(compact('order'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
+
     public function viewDetail($id = null)
     {
         if ($this->auth->role == 1 || $this->auth->role == 2) {
@@ -74,8 +73,6 @@ class OrdersController extends AppController
             $this->set('title', 'Chi tiết hóa đơn');
             $this->set(compact('order', 'prd'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -102,8 +99,10 @@ class OrdersController extends AppController
             $this->set('title', 'Thêm hóa đơn');
             $this->set(compact('order'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -133,8 +132,10 @@ class OrdersController extends AppController
             $this->set('title', 'Sửa hóa đơn');
             $this->set(compact('order'));
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -158,8 +159,10 @@ class OrdersController extends AppController
             }
             return $this->redirect(['action' => 'index']);
         }
-        if ($this->auth->role == 2)
-            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        if ($this->auth->role == 2) {
+            $this->Flash->error(__('You do not permission.'));
+            return $this->redirect($this->referer());
+        }
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
@@ -201,6 +204,7 @@ class OrdersController extends AppController
         if ($this->auth->role != 1 && $this->auth->role != 2)
             return $this->redirect('/');
     }
+
     public function rejectOrder($id = null)
     {
         if ($this->auth->role == 1 || $this->auth->role == 2) {
